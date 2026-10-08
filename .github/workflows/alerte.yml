@@ -1,0 +1,40 @@
+name: Alerte Bornes Sarthe
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-alerte:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests Pillow
+
+      - name: Run script
+        env:
+          NTFY_TOPIC_NOUVELLES: ${{ secrets.NTFY_TOPIC_NOUVELLES }}
+          NTFY_TOPIC_RETRAITS: ${{ secrets.NTFY_TOPIC_RETRAITS }}
+        run: python alerte_bornes_sarthe.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "ci@github.com"
+          git config --global user.name "Alerte Bot"
+          git add bornes_memoire.json index.html icon-192.png icon-512.png manifest.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "MAJ auto"
+            git push
+          fi
