@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bornes Sarthe</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#059669">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+         background: #f0f4f8; color: #222; padding: 12px;
+         max-width: 700px; margin: 0 auto; }
+  header { background: linear-gradient(135deg, #0369a1, #075985);
+            color: white; padding: 16px; border-radius: 12px;
+            margin-bottom: 12px; text-align: center; }
+  h1 { font-size: 1.3em; margin-bottom: 6px; }
+  .stats { font-size: 0.9em; opacity: 0.95; }
+  .stats span { display: inline-block; margin: 2px 6px; }
+
+  .btn-geoloc { width: 100%; padding: 14px; margin-bottom: 12px;
+                 background: linear-gradient(135deg, #059669, #047857);
+                 color: white; border: none; border-radius: 10px;
+                 font-size: 1em; font-weight: bold; cursor: pointer;
+                 box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .btn-geoloc:active { transform: scale(0.98); }
+  .btn-geoloc.actif { background: linear-gradient(135deg, #0369a1, #075985); }
+
+  .filtres { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .filtre { flex: 1; min-width: 80px; padding: 8px 10px; border: none;
+             background: white; border-radius: 8px; font-size: 0.8em;
+             font-weight: bold; cursor: pointer; color: #333;
+             box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .filtre.actif { background: #0369a1; color: white; }
+
+  .station { background: white; padding: 12px; margin-bottom: 8px;
+              border-radius: 10px; border-left: 4px solid #ccc;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.06); position: relative; }
+  .badge { position: absolute; top: 8px; right: 8px;
+            font-size: 0.65em; color: white; padding: 2px 6px;
+            border-radius: 4px; font-weight: bold; }
+  .nom { font-weight: bold; font-size: 0.95em; padding-right: 80px; }
+  .puissance { font-size: 1.4em; font-weight: bold; color: #0369a1;
+                margin: 4px 0; }
+  .adresse { font-size: 0.85em; color: #555; }
+  .commune { font-size: 0.85em; color: #888; margin-bottom: 6px; }
+  .prises { margin: 6px 0; }
+  .prise { display: inline-block; background: #e0f2fe; color: #0369a1;
+            padding: 2px 6px; border-radius: 4px; font-size: 0.75em;
+            margin-right: 4px; margin-bottom: 2px; }
+  .infos { font-size: 0.8em; color: #666; display: flex;
+            justify-content: space-between; margin-top: 6px; }
+  .actions { display: flex; align-items: center; justify-content: space-between;
+              margin-top: 10px; padding-top: 8px;
+              border-top: 1px solid #eee; }
+  .nav-btn { display: inline-block; background: #0369a1; color: white;
+              padding: 8px 14px; border-radius: 6px; text-decoration: none;
+              font-size: 0.85em; font-weight: bold; }
+  .nav-btn:active { background: #075985; }
+  .distance { font-size: 0.9em; color: #059669; font-weight: bold; }
+  .date { text-align: center; color: #888; font-size: 0.8em;
+           margin: 16px 0 8px 0; }
+  .cache { display: none; }
+  .proche { border-left-width: 6px !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚡ Bornes Sarthe</h1>
+  <div class="stats">
+    <span>📍 126 stations</span>
+    <span>⚡ 79 rapides</span>
+    <span>🚀 60 ultra</span>
+  </div>
+</header>
+
+<button class="btn-geoloc" id="btn-geoloc" onclick="localiser()">
+  📍 Trouver les bornes autour de moi
+</button>
+
+<div class="filtres">
+  <button class="filtre actif" onclick="filtre('toutes', this)">Toutes</button>
+  <button class="filtre" onclick="filtre('rapide', this)">⚡ Rapides</button>
+  <button class="filtre" onclick="filtre('ultra', this)">🚀 Ultra</button>
+</div>
+
+<div id="liste">
+
+        <div class="station" style="border-left-color: #c00;" data-puissance="600" data-id="FRATLPFR00969">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Atlante - La Flèche - Kiabi</div>
+            <div class="puissance">600 kW</div>
+            <div class="adresse">zone Commerciale De La Monnerie, , La Flèche</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 Atlante France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.70546,-0.04994&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRATLPFR00969"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="500" data-id="FRBPEP3EA020">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Saint Saturnin</div>
+            <div class="puissance">500 kW</div>
+            <div class="adresse">1 Rue de Villeneuve 72650 Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 26 PDC</span>
+                <span>🏢 bp France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.049768,0.174899&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRBPEP3EA020"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="400" data-id="FRAU1P00960000">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Etoile Routière LE BAILLEUL (72)</div>
+            <div class="puissance">400 kW</div>
+            <div class="adresse">270 Rue D’Espagne 72200 Le Bailleul</div>
+            <div class="commune">Le Bailleul (72200)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 16 PDC</span>
+                <span>🏢 AUTORECHARGE SAS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.7794811639259,-0.21463373160781&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRAU1P00960000"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="400" data-id="FRAU1P00830000">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Transports Malherbe Vironvay (27400</div>
+            <div class="puissance">400 kW</div>
+            <div class="adresse">270 Rue D’Espagne 72200 Le Bailleul</div>
+            <div class="commune">Le Bailleul (72200)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 7 PDC</span>
+                <span>🏢 AUTORECHARGE SAS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.7794811639259,-0.21463373160781&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRAU1P00830000"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="400" data-id="FRELCP12954305">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Electra Saint-Saturnin - Electra</div>
+            <div class="puissance">400 kW</div>
+            <div class="adresse">ZAC des portes de l'Océane, N138, 72650 Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 10 PDC</span>
+                <span>🏢 Electra</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.049505,0.169569&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRELCP12954305"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="400" data-id="FRFASP11948241">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Fastned Yvré L'Evèque</div>
+            <div class="puissance">400 kW</div>
+            <div class="adresse">Avenue d'Auvours 1, 72530 Yvré-l'Évêque</div>
+            <div class="commune">Yvré-l'Évêque (72530)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 Fastned France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.011427,0.300547&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRFASP11948241"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="400" data-id="FRIOYP13531530">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY GmbH IONITY Saint-Saturnin</div>
+            <div class="puissance">400 kW</div>
+            <div class="adresse">Zone commerciale des Portes de l'Océane, 72650 Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 Ionity</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.050801,0.171248&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIOYP13531530"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIONE404100">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY Villaines la Gonais</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire de Villaines la Gonais A11-72400 Villaines-la-Gonais</div>
+            <div class="commune">La Bosse (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 IONITY</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.125475,0.622302&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIONE404100"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIONE404200">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY La Ferté-Bernard</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire de la Ferté Bernard - A11, 72400 Villaines-la-Gonais</div>
+            <div class="commune">Villaines-la-Gonais (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 IONITY</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.126677,0.623299&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIONE404200"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIONE403400">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY Sarthe Sud</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire De Parce Est,A11, 72300 Parcé-sur-Sarthe</div>
+            <div class="commune">Parcé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 IONITY</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.807101,-0.166865&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIONE403400"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIONE403300">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY Sarthe Nord</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire de Parce Ouest,A11-72300 Parcé-sur-Sarthe</div>
+            <div class="commune">Parcé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 IONITY</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=49.089259,2.5485168&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIONE403300"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIOYP13530964">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY GmbH IONITY Sarthe Nord</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire de Parce Ouest, 72300 Parcé-sur-Sarthe</div>
+            <div class="commune">Parcé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 7 PDC</span>
+                <span>🏢 Ionity</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.807101,-0.166865&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIOYP13530964"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIOYP13530938">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY GmbH IONITY Sarthe Sud</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">A11 Aire De Parce Est, 72300 Parcé-sur-Sarthe</div>
+            <div class="commune">Parcé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 7 PDC</span>
+                <span>🏢 Ionity</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.803507,-0.16809&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIOYP13530938"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIOYP13531100">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY GmbH IONITY Villaines la Gonais</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire de service de Villaines la Gonais, A11, 72400 Villaines-la-Gonais</div>
+            <div class="commune">La Bosse (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 Ionity</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.125475,0.622302&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIOYP13531100"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="350" data-id="FRIOYP13530978">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IONITY GmbH IONITY La Ferté-Bernard</div>
+            <div class="puissance">350 kW</div>
+            <div class="adresse">Aire de service de la Ferté Bernard, A11, 72400 Villaines-la-Gonais</div>
+            <div class="commune">Villaines-la-Gonais (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 Ionity</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.126677,0.623299&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIOYP13530978"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="320" data-id="FRIENP002401">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Sablé-sur-Sarthe</div>
+            <div class="puissance">320 kW</div>
+            <div class="adresse">La petite Croix, 72300 Sablé-sur-Sarthe</div>
+            <div class="commune">Sablé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 NW IECharge</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.834549,-0.357699&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIENP002401"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="320" data-id="FRIENP002402">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Sablé-sur-Sarthe</div>
+            <div class="puissance">320 kW</div>
+            <div class="adresse">La petite Croix, 72300 Sablé-sur-Sarthe</div>
+            <div class="commune">Sablé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 NW IECharge</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.834549,-0.357699&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIENP002402"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRSITE00000248">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aire de Pirmil Ouest_A11</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Aire de Pirmil Ouest A11 km 197 - 72430 Primil</div>
+            <div class="commune">Pirmil (72430)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 13 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.9111059,-0.086755&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSITE00000248"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRALLPGO000429">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aire de Pirmil Ouest_A11</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Aire de Pirmil Ouest, A11, km 197</div>
+            <div class="commune">Pirmil (72430)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 13 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.9111059,-0.086755&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALLPGO000429"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRSITE00000250">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aire de Pirmil Est_A11</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Aire de Pirmil Est  A11 km 197 - 72430 Pirmil</div>
+            <div class="commune">Pirmil (72430)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 13 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.9122925,-0.0831179&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSITE00000250"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRALLPGO000428">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aire de Pirmil Est_A11</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Aire de Pirmil Est, A11, km 197</div>
+            <div class="commune">Pirmil (72430)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 13 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.9122925,-0.0831179&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALLPGO000428"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRSITE00000316">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aire du Mans Nord_A11</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">A11 Sortie 7 Le Mans ZI Nord, 72650-Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 15 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.051271,0.173327&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSITE00000316"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRALLPGO000757">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aire de Le Mans Nord_A11</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">A11 Sortie 7 Le Mans ZI Nord</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 15 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.051271,0.173327&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALLPGO000757"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRATLPFR00858">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Atlante - Arçonnay - Burger King</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Rue Des Coudrays, 2, Arçonnay</div>
+            <div class="commune">Arçonnay (72610)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 14 PDC</span>
+                <span>🏢 Atlante France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.40422,0.089477&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRATLPFR00858"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRATLPFR00286">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Atlante - Arçonnay - King Jouet Alençon</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Rue du Maine Normandie, , Arçonnay</div>
+            <div class="commune">Arçonnay (72610)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 9 PDC</span>
+                <span>🏢 Atlante France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.40814,0.08752&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRATLPFR00286"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRELCP12953951">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Electra Ruaudin - CC Family Village les Hunaudières</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">1 boulevard des Hunaudières, 72230 Ruaudin</div>
+            <div class="commune">Mulsanne (72230)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 Electra</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.943807,0.239637&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRELCP12953951"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRHPCPNF080138TOTEM">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">SARTHE SARGE LE MANS NORD</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">L'OCEANE, 72190 SARGE LES LE MANS</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 16 PDC</span>
+                <span>🏢 TotalEnergies Marketing France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.056344,0.254399&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRHPCPNF080138TOTEM"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRVIAP103113">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">ENGIE Vianeo - A81 St-Denis d'Orques</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Aire de Saint-Denis d'Orques - A81 - 72350 SAINT-DENIS-D'ORQUES</div>
+            <div class="commune">Saint-Denis-d'Orques (72350)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 24 PDC</span>
+                <span>🏢 Greenflux</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.023719,-0.325674&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRVIAP103113"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="300" data-id="FRVIAP122097">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">ENGIE Vianeo - B&B HOTEL LE MANS NORD 2</div>
+            <div class="puissance">300 kW</div>
+            <div class="adresse">Rue Joseph Caillaux 8 - 72650 Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 14 PDC</span>
+                <span>🏢 Greenflux</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.05181,0.16551&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRVIAP122097"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="270" data-id="FREFLEV2457638">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">DAF LEMANS</div>
+            <div class="puissance">270 kW</div>
+            <div class="adresse"> 31 rue des Guinaudières, 72650 Saint Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 E-Flux</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.05,0.16&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FREFLEV2457638"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="250" data-id="FRTSLP1745">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Le Mans, France</div>
+            <div class="puissance">250 kW</div>
+            <div class="adresse">ZAC du Moulin aux Moines, Route d'Alencon</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 32 PDC</span>
+                <span>🏢 Tesla</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.041259,0.175722&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRTSLP1745"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="250" data-id="FRTSLP17341">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Saint-Saturnin, France</div>
+            <div class="puissance">250 kW</div>
+            <div class="adresse">3, Rue Louis Chappée</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 86 PDC</span>
+                <span>🏢 Tesla</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.053197,0.166468&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRTSLP17341"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRALLPGO000672">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Burger King Le Mans Saint-Saturnin</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">9 Rue Des Petites Marnieres</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 Allego</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.047642,0.170206&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALLPGO000672"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRDREP720030001">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aria Parc | Conn. 1</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">1 Rue de la Berardiere, 72003 Allonnes</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 DREAM ENERGY</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975,0.151&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDREP720030001"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRIZFPFAST434">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's -  Le Mans CGR</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">1 Rue Pique Prunes 72650 Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 15 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.05076530113992,0.1703193573286021&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST434"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRPD1PITMLLD">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Intermarché - Le Lude</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">65 Rte de Saumur</div>
+            <div class="commune">Le Lude (72800)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 Power Dot France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.639465,0.151974&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRPD1PITMLLD"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRPD1PLCLLFL">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">E.Leclerc - La Flèche</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">7 Rue Henri Dunant, 72000 La Flèche, France</div>
+            <div class="commune">Le Mans (72000)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 34 PDC</span>
+                <span>🏢 Power Dot France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.702005693776,-0.054514444844058&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRPD1PLCLLFL"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRQWTP720030001">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Aria Parc | Conn. 1</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">1 Rue de la Berardiere, 72003 Allonnes</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 QoWatt</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975,0.151&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQWTP720030001"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRQWTP776696">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Route de la Rochelle 21</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">Route de la Rochelle 2179000 Bessines</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 QoWatt</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975476658497,0.15145223027114&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQWTP776696"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRQWTP801271">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Rue de Poitiers 29</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">Rue de Poitiers 2979700 Mauléon</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 QoWatt</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975476658497,0.15145223027114&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQWTP801271"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="200" data-id="FRSSDPVOLVOHUB726501">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Volvo - Le Mans HUB - powered by DRIVECO</div>
+            <div class="puissance">200 kW</div>
+            <div class="adresse">6 Rue de Villeneuve, 72650 Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 DRIVECO Partner Network</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.048396,0.173957&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSSDPVOLVOHUB726501"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="180" data-id="Non concerné">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Esso Arnage</div>
+            <div class="puissance">180 kW</div>
+            <div class="adresse">22 Avvenue nationale, 72230 Arnage</div>
+            <div class="commune">Arnage (72230)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 9 PDC</span>
+                <span>🏢 C4Energies</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.933208,0.187339&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="Non concerné"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="180" data-id="FRLDLPLFR3548EVCP">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">LE MANS Edison</div>
+            <div class="puissance">180 kW</div>
+            <div class="adresse">8 RUE THOMAS EDISON</div>
+            <div class="commune">Le Mans (72000)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.025203,0.180257&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR3548EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="180" data-id="FRLDLPLFR4292EVCP">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">MAREIL EN CHAMPAGNE Molière</div>
+            <div class="puissance">180 kW</div>
+            <div class="adresse">1  rue de la Molière</div>
+            <div class="commune">Mareil-en-Champagne (72540)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.987479,-0.164533&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR4292EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="175" data-id="FRHPCPNF059902TOTEM">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">SARTHE SARGE LE MANS SUD</div>
+            <div class="puissance">175 kW</div>
+            <div class="adresse">L'OCEANE, 72190 SARGE LES LE MANS</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 TotalEnergies Marketing France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.055456,0.252268&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRHPCPNF059902TOTEM"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="175" data-id="FRHPCPNF059902">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">SARTHE SARGE LE MANS SUD</div>
+            <div class="puissance">175 kW</div>
+            <div class="adresse">A11 - AIRE SARTHE SARGE LE MANSS</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 TotalEnergies Charging Services</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.0553,0.252&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRHPCPNF059902"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="175" data-id="FRHPCPNF080138">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">SARTHE SARGE LE MANS NORD</div>
+            <div class="puissance">175 kW</div>
+            <div class="adresse">A11-AIRE SARTHE SARGE LE MANS NO</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 TotalEnergies Charging Services</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.0558,0.2552&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRHPCPNF080138"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRATLPPORT6501">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Atlante -  Saint Saturnin - Le Portofino</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Rue Louis Chappée, 7, Saint-Saturnin</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 9 PDC</span>
+                <span>🏢 Atlante France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.052051,0.166481&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRATLPPORT6501"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRATLPFR00542">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">Atlante - Arnage - Hôtel Restaurant Campanile Le Mans Sud Arnage</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Rue de la Gemerie, , Arnage</div>
+            <div class="commune">Arnage (72230)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 Atlante France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.9429,0.1814&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRATLPFR00542"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRE04POAZS273">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">NORAUTO - ALLONNES</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Norauto, Rue de la Raterie, Zone d'aménagement commerciale du Vivier, 72700 Allonnes</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975755,0.15792&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRE04POAZS273"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRETIP72154A">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">e-Totem - Bricomarché La Fleche 1</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Bd du Québec 72200 La Flèche</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 E-TOTEM</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.70435674796952,-0.09086791302214382&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRETIP72154A"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRHPCPNF080150">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">RELAIS MARESCHE</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">A28 GARE DE PEAGE MARESCHE, 72170 MARESCHE</div>
+            <div class="commune">Maresché (72170)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 TotalEnergies Marketing France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.197319,0.169097&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRHPCPNF080150"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIGFPFRAI30">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA MAX - GRAND FRAIS - SARGÉ-LÈS-LE-MANS</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Rue des Frènes 72190 Sargé-lès-le-Mans</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 10 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.0245525,0.2395174&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIGFPFRAI30"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST121">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's -  Le Mans Nord</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">1 Lotissement Commercial Détroit 72650 La Chapelle-Saint-Aubin</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.03668497283907,0.1753439588607808&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST121"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST243">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's - Sable sur Sarthe</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Routes de Solesmes, Parc de la Tuilerie 72300 Sablé-sur-Sarthe</div>
+            <div class="commune">Solesmes (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.8382840504821,-0.29916719206543263&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST243"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST288">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's - Allonnes</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">Rue de la Raterie 72700 Allonnes</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.97455381211864,0.15872431018754352&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST288"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST592">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's - LA FERTE BERNARD</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">3 Avenue du Général de Gaulle 72400 LA FERTE BERNARD</div>
+            <div class="commune">La Ferté-Bernard (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.180968573281,0.652593035748101&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST592"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST618">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's - ARCONNAY</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">ZA Du Petit Coudray 72610 ARCONNAY</div>
+            <div class="commune">Arçonnay (72610)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.405715931442,0.0884145953800261&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST618"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST653">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's - La Flèche</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">La Monnerie 72200 La Flèche</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.7036396255164,-0.05349225032567209&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST653"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #c00;" data-puissance="150" data-id="FRIZFPFAST742">
+            <div class="badge" style="background: #c00;">ULTRA</div>
+            <div class="nom">IZIVIA FAST - McDonald's - Mamers</div>
+            <div class="puissance">150 kW</div>
+            <div class="adresse">11 Route de Belleme 72600 Mamers</div>
+            <div class="commune">Mamers (72600)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.35022600767137,0.38542388630864177&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIZFPFAST742"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FREVZP92B39C4E36764304999378F5A57AF">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">EVzen - Coulaines, Alpha Services Coulaines</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">Rue Jean Cocteau Et Bd Saint Nicolas 72190 Coulaines</div>
+            <div class="commune">Coulaines (72190)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 EVzen</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.028683,0.202702&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FREVZP92B39C4E36764304999378F5A57AF"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR3738EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">LE MANS Breguet</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">28 Rue Louis Breguet</div>
+            <div class="commune">Le Mans (72100)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975995,0.166001&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR3738EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR3556EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">YVRE L'EVEQUE  RN 23</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">23 route de Paris</div>
+            <div class="commune">Yvré-l'Évêque (72530)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.00158,0.245485&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR3556EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR2369EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">ARCONNAY</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">2 Rte du Mans</div>
+            <div class="commune">Arçonnay (72610)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.3975341,0.0895985&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR2369EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR2911EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">LE MANS Geneslay</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">450 Av. Félix Geneslay</div>
+            <div class="commune">Le Mans (72100)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 6 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.963977,0.201249&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR2911EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR4018EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">ST LONGIS - Saint-Jean</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">2 lieu-dit Le Haut Saint Jean 72600 Saint-Longis</div>
+            <div class="commune">Saint-Longis (72600)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 18 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.352815,0.356473&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR4018EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR4241EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">ECOMMOY Mans</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">116 Route du Mans</div>
+            <div class="commune">Écommoy (72220)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 16 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.837727,0.26509&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR4241EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRLDLPLFR3239EVCP">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">LA FERTE BERNARD</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">41 AVENUE DU GÉNÉRAL DE GAULLE</div>
+            <div class="commune">La Ferté-Bernard (72400)</div>
+            <div class="prises"><span class="prise">CCS</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.18029047100344,0.6541058274027557&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR3239EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="120" data-id="FRPD1PSUPSAB">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Super U - Sablé-sur-Sarthe</div>
+            <div class="puissance">120 kW</div>
+            <div class="adresse">2 Rue de Plaisance, 72300 Sablé-sur-Sarthe, France</div>
+            <div class="commune">Sablé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 Power Dot France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.850226,-0.350858&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRPD1PSUPSAB"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="100" data-id="FRPD1PACCSAT">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">hotelF1 - Saint-Saturnin</div>
+            <div class="puissance">100 kW</div>
+            <div class="adresse">5 Rue Joseph Caillaux, 72650 Saint-Saturnin, France</div>
+            <div class="commune">Saint-Saturnin (72650)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 Power Dot France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.051586823503,0.16480546938095&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRPD1PACCSAT"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="100" data-id="FRPD1PDSJRAD">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Centre Commercial Maine Street Super U - Ruaudin</div>
+            <div class="puissance">100 kW</div>
+            <div class="adresse">2 Bd des Hunaudières, 72230 Ruaudin, France</div>
+            <div class="commune">Ruaudin (72230)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 24 PDC</span>
+                <span>🏢 Power Dot France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.94410801637,0.2406495609825&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRPD1PDSJRAD"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="63" data-id="FRE04POAZS271">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">NORAUTO - LA FLÈCHE</div>
+            <div class="puissance">63 kW</div>
+            <div class="adresse">Norauto, Rue du Levant 72200 La Flèche</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 IZIVIA</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.704318,-0.053254&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRE04POAZS271"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="60" data-id="FRPD1PSYUMEC">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Super U - Mareil-en-Champagne</div>
+            <div class="puissance">60 kW</div>
+            <div class="adresse">RTE Lieudit la Grangerte, 72540 Mareil-en-Champagne</div>
+            <div class="commune">Mareil-en-Champagne (72540)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 Power Dot France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.987574926686,-0.16273856679534&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRPD1PSYUMEC"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="50" data-id="FRDRVPCRFMKT721201">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Carrefour Market - Saint-Calais Pressoir</div>
+            <div class="puissance">50 kW</div>
+            <div class="adresse">ZA du Pressoir 10 Rue du Champ de la Croix, 72120 Saint-Calais</div>
+            <div class="commune">Saint-Calais (72120)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 DRIVECO</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.917689,0.766001&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDRVPCRFMKT721201"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="50" data-id="FRDRVPDLNV">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Carrefour Market - Connerre</div>
+            <div class="puissance">50 kW</div>
+            <div class="adresse">Rue de Paris, 72160 Connerre</div>
+            <div class="commune">Connerré (72160)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 DRIVECO</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.063363,0.508557&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDRVPDLNV"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="50" data-id="FRDRVPCRFMKT722301">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Carrefour Market - Mulsanne</div>
+            <div class="puissance">50 kW</div>
+            <div class="adresse">Av. de Bonen, 72230 Mulsanne</div>
+            <div class="commune">Mulsanne (72230)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 DRIVECO</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.91344,0.245753&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDRVPCRFMKT722301"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="50" data-id="FRDRVPCRFMKT723301">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Carrefour Market - Cerans Foulletourte</div>
+            <div class="puissance">50 kW</div>
+            <div class="adresse">Centre Commercial De 62 Rue nationale, 72330 Cérans-Foulletourte</div>
+            <div class="commune">Cérans-Foulletourte (72330)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 DRIVECO</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.829672,0.076881&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDRVPCRFMKT723301"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="50" data-id="FRDRVPCRFMKT724001">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Carrefour Market - La Ferte-Bernard</div>
+            <div class="puissance">50 kW</div>
+            <div class="adresse">Av. Pierre Brûle, 72400 La Ferté-Bernard</div>
+            <div class="commune">La Ferté-Bernard (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 DRIVECO</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.181398,0.661755&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDRVPCRFMKT724001"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #e80;" data-puissance="50" data-id="FRDRVPCRFMKT723001">
+            <div class="badge" style="background: #e80;">RAPIDE</div>
+            <div class="nom">Carrefour Market - Sable-Sur-Sarthe</div>
+            <div class="puissance">50 kW</div>
+            <div class="adresse">Rte de la Flèche, 72300 Sablé-sur-Sarthe</div>
+            <div class="commune">Sablé-sur-Sarthe (72300)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 DRIVECO</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.831179,-0.315201&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRDRVPCRFMKT723001"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72BACA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Place Jean Dufournier - BESSE SUR BRAYE</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">Place Jean Dufournier, 72310 BESSE SUR BRAYE</div>
+            <div class="commune">Bessé-sur-Braye (72310)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.833417,0.753487&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72BACA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72CABA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">CITROEN - CERANS FOULLETOURTE</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">171 rue Nationale, 72330 CERANS FOULLETOURTE</div>
+            <div class="commune">Cérans-Foulletourte (72330)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.824714,0.073389&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72CABA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72FBAA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Ludothèque - LA FERTE BERNARD</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">1 Rue Alfred Marchand, 72400 LA FERTE BERNARD</div>
+            <div class="commune">La Ferté-Bernard (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.183658,0.651662&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72FBAA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72FBBA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Place de la république - LA FERTE BERNARD</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">7 Rue Robert Garnier, 72400 LA FERTE BERNARD</div>
+            <div class="commune">La Ferté-Bernard (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.186522,0.653937&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72FBBA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72FBCA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Mc Donald - LA FERTE BERNARD</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">3 Av. du Général de Gaulle, 72400 LA FERTE BERNARD</div>
+            <div class="commune">La Ferté-Bernard (72400)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.181304,0.652222&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72FBCA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72SABA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">SAINT-COSME-EN-VAIRAIS - Place Saint-Damien</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">Pl. Saint-Damien, 72110 ST COSME EN VAIRAIS</div>
+            <div class="commune">Saint-Cosme-en-Vairais (72110)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.274377,0.459947&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72SABA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72SACA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">UTILE - ST GEORGES DU BOIS</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">Parc des Hayes, 1 Av. des Constellations, 72700 SAINT GEORGES DU BOIS</div>
+            <div class="commune">Saint-Georges-du-Bois (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.96688,0.093458&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72SACA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="24" data-id="FRSE1PSE72SADA">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Rue de l'école - Sceaux-sur-Huisne</div>
+            <div class="puissance">24 kW</div>
+            <div class="adresse">4 Rue de l'École, 72160 SCEAUX SUR HUISNE</div>
+            <div class="commune">Sceaux-sur-Huisne (72160)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 STATIONS-E</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.104858,0.584791&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSE1PSE72SADA"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FR55CP72130GGAP3PC">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">PARKING COVOITURAGE - GESNES-LE-GANDELIN</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">2 Rue Grande Rue 72130 Gesnes-le-Gandelin</div>
+            <div class="commune">Gesnes-le-Gandelin (72130)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 ELECTRIC 55 CHARGING</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.354995,0.015068&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FR55CP72130GGAP3PC"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRC2N100795828">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">SCI CONGLOMERAT</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">157 Boulevard Pierre Lefaucheux, Arnage, France 72230</div>
+            <div class="commune">Arnage (72230)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 CAR2PLUG</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.93451930000001,0.1876031&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRC2N100795828"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRC2N931237967">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">SCI CONGLOMERAT</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">157 Boulevard Pierre Lefaucheux, Arnage, France 72230</div>
+            <div class="commune">Arnage (72230)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 CAR2PLUG</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.93451930000001,0.1876031&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRC2N931237967"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRIDXP91355366">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Parking Zoo de la Flèche</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Le Tertre Rouge</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 26 PDC</span>
+                <span>🏢 Idex</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.677576,-0.04594&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRIDXP91355366"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRALNP25007039">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">CONLIE</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">ALDI, 29 Rue du Mans, 72240 Conlie, France</div>
+            <div class="commune">Conlie (72240)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 ALDI SARL</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.120507,-0.013525&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALNP25007039"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRALNP25007064">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">LA SUZE-SUR-SARTHE</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">ALDI, Rue Marie Pape Carpentier, 72210 La Suze-sur-Sarthe, France</div>
+            <div class="commune">La Suze-sur-Sarthe (72210)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 ALDI SARL</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.892279,0.04132&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALNP25007064"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRALNP25007077">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">MONTVAL-SUR-LOIR</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">1 Avenue De Tours 72500 MONTVAL-SUR-LOIR</div>
+            <div class="commune">Montval-sur-Loir (72500)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 ALDI SARL</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.689868,0.42661&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALNP25007077"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRALNP25007078">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">SARGE LES LE MANS</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">400 Rte de Bonnétable, 72190 Sargé-lès-le-Mans, France</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 ALDI SARL</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.026206,0.23655&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALNP25007078"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRALNP25007090">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">ECOMMOY</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">37 Route du Mans, Écommoy, France</div>
+            <div class="commune">Écommoy (72220)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 ALDI SARL</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.832771,0.269119&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALNP25007090"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRALNP25007112">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">BEAUMONT-SUR-SARTHE</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Angle Rue Des Alpes Mancelles D39 Et Route De La Maufiere 72170 BEAUMONT-SUR-SARTHE</div>
+            <div class="commune">Beaumont-sur-Sarthe (72170)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 ALDI SARL</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.232093,0.122048&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRALNP25007112"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRETIP72058A">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">e-Totem - Domaine de la blanchardière </div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Lieu dit La Blanchardière 72560 Changé</div>
+            <div class="commune">Changé (72560)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 12 PDC</span>
+                <span>🏢 E-TOTEM</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.99013663047372,0.2677415428742836&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRETIP72058A"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRLDLPLFR0708EVCP">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">LA FLECHE</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">rue Henri Dunant</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 8 PDC</span>
+                <span>🏢 LIDL France</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.701895,-0.060477&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLDLPLFR0708EVCP"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRLMSP91355366">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Zoo de La Flèche</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Le Tertre Rouge</div>
+            <div class="commune">La Flèche (72200)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 24 PDC</span>
+                <span>🏢 IDEX SOLAR CHARGING STATIONS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.677576,-0.04594&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRLMSP91355366"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FROTHPOTHR62931">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">LA CHAPELLE ST AUBIN LE MANS</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 Izivia</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.041846,0.175245&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FROTHPOTHR62931"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FROTHPOTHR62932">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">LA CHAPELLE ST AUBIN LE MANS</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 Izivia</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.041846,0.175245&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FROTHPOTHR62932"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FROTHPOTHR62941">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">LA CHAPELLE ST AUBIN LE MANS</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 Izivia</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.041846,0.175245&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FROTHPOTHR62941"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FROTHPOTHR62942">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">LA CHAPELLE ST AUBIN LE MANS</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 Izivia</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.041846,0.175245&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FROTHPOTHR62942"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRQVI7200011">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">25 Rue du Val de Braye</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">25 Rue du Val de Braye 72310 BESSE SUR BRAYE</div>
+            <div class="commune">Bessé-sur-Braye (72310)</div>
+            <div class="prises"></div>
+            <div class="infos">
+                <span>🔌 5 PDC</span>
+                <span>🏢 QOVOLTIS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.8316813,0.7552939&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQVI7200011"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRQVI7200006">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">12 Rue du champ de la Croix, ZA du pressoir hotel</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">12 Rue du champ de la Croix, ZA du pressoir hotel 72120 SAINT CALAIS</div>
+            <div class="commune">Écorpain (72120)</div>
+            <div class="prises"></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 QOVOLTIS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.91873,0.76592&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQVI7200006"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRQVI7205347">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">2 ld, Meslay</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">2 ld, Meslay 72610 FYE</div>
+            <div class="commune">Fyé (72610)</div>
+            <div class="prises"></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 QOVOLTIS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.3312545,0.0448862&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQVI7205347"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRQWTP733981">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">1 Rue de la Berardiere, 72700 Allonnes</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">1 Rue de la Berardiere, 72700 Allonnes72700 Allonnes</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 QoWatt</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975476658497,0.15145223027114&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQWTP733981"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRQWTP807449">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Rue du Grand Faubourg 45</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Rue du Grand Faubourg 4526230 Grignan</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 2 PDC</span>
+                <span>🏢 QoWatt</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975476658497,0.15145223027114&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQWTP807449"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRQWTP807441">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Rue du Grand Faubourg 45</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Rue du Grand Faubourg 4526230 Grignan</div>
+            <div class="commune">Allonnes (72700)</div>
+            <div class="prises"><span class="prise">CCS</span> <span class="prise">CHAdeMO</span> <span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 4 PDC</span>
+                <span>🏢 QoWatt</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.975476658497,0.15145223027114&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRQWTP807441"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2121">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2121</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Route de Coémont 72800 Le Lude</div>
+            <div class="commune">Le Lude (72800)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.673519,0.110747&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2121"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2156">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2156</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">24 Rue de la Mairie 72160 Tuffé Val de la Cheronne</div>
+            <div class="commune">Tuffé Val de la Chéronne (72160)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.110359,0.52138&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2156"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2189">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2189</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">240 Le Parc 72700 Spay</div>
+            <div class="commune">Spay (72700)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.941623,0.161594&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2189"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2191">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2191</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">297 Le Parc 72700 Spay</div>
+            <div class="commune">Spay (72700)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.942226,0.163312&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2191"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2209">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2209</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.037418,0.174383&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2209"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2210">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2210</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.037418,0.174383&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2210"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2213">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2213</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.037418,0.174383&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2213"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2214">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2214</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin</div>
+            <div class="commune">La Chapelle-Saint-Aubin (72650)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.037418,0.174383&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2214"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1M2216">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">M2216</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">ZA Le Chapeau 72190 Neuville-sur-Sarthe</div>
+            <div class="commune">Neuville-sur-Sarthe (72190)</div>
+            <div class="prises"><span class="prise">EF</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 3 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.047573,0.214709&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1M2216"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1SB002">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">SB002</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">129 Boulevard Pierre le faucheux 72230 Arnage</div>
+            <div class="commune">Arnage (72230)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.940597,0.185348&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1SB002"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSGAP1SB003">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">SB003</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">129 Boulevard Pierre le faucheux 72230 Arnage</div>
+            <div class="commune">Arnage (72230)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 SGA Industries</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.940597,0.185348&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSGAP1SB003"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRSYSELMSPAT">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Patte d'oie</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">Boulevard Demorieux - Parking</div>
+            <div class="commune">Le Mans (72100)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 See You Sun</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.977284,0.172916&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSYSELMSPAT"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="22" data-id="FRZP1PEAC49680">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Garage Loué Automobiles - 22 kW AC</div>
+            <div class="puissance">22 kW</div>
+            <div class="adresse">1 zone artisanale les bates</div>
+            <div class="commune">Loué (72540)</div>
+            <div class="prises"><span class="prise">CHAdeMO</span> <span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 Zephyre SAS</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.99211944,-0.13781439&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRZP1PEAC49680"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="7" data-id="FRSYSELMSSGDB">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Saint-Georges-du-bois</div>
+            <div class="puissance">7 kW</div>
+            <div class="adresse">Rue Saint-Bartholoma / 22 Rue de Souligné</div>
+            <div class="commune">Saint-Georges-du-Bois (72700)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 See You Sun</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=47.972872,0.095828&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSYSELMSSGDB"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="7" data-id="FRSYSELMSFON">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Les Fontenelles</div>
+            <div class="puissance">7 kW</div>
+            <div class="adresse">Chemin du villaret</div>
+            <div class="commune">Le Mans (72100)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 See You Sun</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.018384,0.237465&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSYSELMSFON"></span>
+            </div>
+        </div>
+        <div class="station" style="border-left-color: #090;" data-puissance="7" data-id="FRSYSELMSSAR">
+            <div class="badge" style="background: #090;">NORMALE</div>
+            <div class="nom">Sargé Capucines</div>
+            <div class="puissance">7 kW</div>
+            <div class="adresse">14 Rue des Capucines</div>
+            <div class="commune">Sargé-lès-le-Mans (72190)</div>
+            <div class="prises"><span class="prise">Type 2</span></div>
+            <div class="infos">
+                <span>🔌 1 PDC</span>
+                <span>🏢 See You Sun</span>
+            </div>
+            <div class="actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=48.033895,0.24189&travelmode=driving" target="_blank" class="nav-btn">🧭 Naviguer</a>
+                <span class="distance" data-id="FRSYSELMSSAR"></span>
+            </div>
+        </div>
+</div>
+
+<div class="date">Mise a jour : 08/10/2026 a 16h09</div>
+
+<script>
+const STATIONS = [{"id": "FRATLPFR00969", "nom": "Atlante - La Flèche - Kiabi", "adresse": "zone Commerciale De La Monnerie, , La Flèche", "commune": "La Flèche", "cp": "72200", "lat": 47.70546, "lon": -0.04994, "puissance": 600.0, "nbre_pdc": 6, "operateur": "Atlante France", "prises": ["CCS"]}, {"id": "FRBPEP3EA020", "nom": "Saint Saturnin", "adresse": "1 Rue de Villeneuve 72650 Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.049768, "lon": 0.174899, "puissance": 500.0, "nbre_pdc": 26, "operateur": "bp France", "prises": ["CCS", "Type 2"]}, {"id": "FRAU1P00960000", "nom": "Etoile Routière LE BAILLEUL (72)", "adresse": "270 Rue D’Espagne 72200 Le Bailleul", "commune": "Le Bailleul", "cp": "72200", "lat": 47.7794811639259, "lon": -0.21463373160781, "puissance": 400.0, "nbre_pdc": 16, "operateur": "AUTORECHARGE SAS", "prises": ["CCS"]}, {"id": "FRAU1P00830000", "nom": "Transports Malherbe Vironvay (27400", "adresse": "270 Rue D’Espagne 72200 Le Bailleul", "commune": "Le Bailleul", "cp": "72200", "lat": 47.7794811639259, "lon": -0.21463373160781, "puissance": 400.0, "nbre_pdc": 7, "operateur": "AUTORECHARGE SAS", "prises": ["CCS"]}, {"id": "FRELCP12954305", "nom": "Electra Saint-Saturnin - Electra", "adresse": "ZAC des portes de l'Océane, N138, 72650 Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.049505, "lon": 0.169569, "puissance": 400.0, "nbre_pdc": 10, "operateur": "Electra", "prises": ["CCS", "Type 2"]}, {"id": "FRFASP11948241", "nom": "Fastned Yvré L'Evèque", "adresse": "Avenue d'Auvours 1, 72530 Yvré-l'Évêque", "commune": "Yvré-l'Évêque", "cp": "72530", "lat": 48.011427, "lon": 0.300547, "puissance": 400.0, "nbre_pdc": 4, "operateur": "Fastned France", "prises": ["CCS", "CHAdeMO"]}, {"id": "FRIOYP13531530", "nom": "IONITY GmbH IONITY Saint-Saturnin", "adresse": "Zone commerciale des Portes de l'Océane, 72650 Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.050801, "lon": 0.171248, "puissance": 400.0, "nbre_pdc": 6, "operateur": "Ionity", "prises": ["CCS"]}, {"id": "FRIONE404100", "nom": "IONITY Villaines la Gonais", "adresse": "Aire de Villaines la Gonais A11-72400 Villaines-la-Gonais", "commune": "La Bosse", "cp": "72400", "lat": 48.125475, "lon": 0.622302, "puissance": 350.0, "nbre_pdc": 1, "operateur": "IONITY", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIONE404200", "nom": "IONITY La Ferté-Bernard", "adresse": "Aire de la Ferté Bernard - A11, 72400 Villaines-la-Gonais", "commune": "Villaines-la-Gonais", "cp": "72400", "lat": 48.126677, "lon": 0.623299, "puissance": 350.0, "nbre_pdc": 1, "operateur": "IONITY", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIONE403400", "nom": "IONITY Sarthe Sud", "adresse": "Aire De Parce Est,A11, 72300 Parcé-sur-Sarthe", "commune": "Parcé-sur-Sarthe", "cp": "72300", "lat": 47.807101, "lon": -0.166865, "puissance": 350.0, "nbre_pdc": 1, "operateur": "IONITY", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIONE403300", "nom": "IONITY Sarthe Nord", "adresse": "Aire de Parce Ouest,A11-72300 Parcé-sur-Sarthe", "commune": "Parcé-sur-Sarthe", "cp": "72300", "lat": 49.089259, "lon": 2.5485168, "puissance": 350.0, "nbre_pdc": 1, "operateur": "IONITY", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIOYP13530964", "nom": "IONITY GmbH IONITY Sarthe Nord", "adresse": "Aire de Parce Ouest, 72300 Parcé-sur-Sarthe", "commune": "Parcé-sur-Sarthe", "cp": "72300", "lat": 47.807101, "lon": -0.166865, "puissance": 350.0, "nbre_pdc": 7, "operateur": "Ionity", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIOYP13530938", "nom": "IONITY GmbH IONITY Sarthe Sud", "adresse": "A11 Aire De Parce Est, 72300 Parcé-sur-Sarthe", "commune": "Parcé-sur-Sarthe", "cp": "72300", "lat": 47.803507, "lon": -0.16809, "puissance": 350.0, "nbre_pdc": 7, "operateur": "Ionity", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIOYP13531100", "nom": "IONITY GmbH IONITY Villaines la Gonais", "adresse": "Aire de service de Villaines la Gonais, A11, 72400 Villaines-la-Gonais", "commune": "La Bosse", "cp": "72400", "lat": 48.125475, "lon": 0.622302, "puissance": 350.0, "nbre_pdc": 12, "operateur": "Ionity", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIOYP13530978", "nom": "IONITY GmbH IONITY La Ferté-Bernard", "adresse": "Aire de service de la Ferté Bernard, A11, 72400 Villaines-la-Gonais", "commune": "Villaines-la-Gonais", "cp": "72400", "lat": 48.126677, "lon": 0.623299, "puissance": 350.0, "nbre_pdc": 8, "operateur": "Ionity", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIENP002401", "nom": "Sablé-sur-Sarthe", "adresse": "La petite Croix, 72300 Sablé-sur-Sarthe", "commune": "Sablé-sur-Sarthe", "cp": "72300", "lat": 47.834549, "lon": -0.357699, "puissance": 320.0, "nbre_pdc": 2, "operateur": "NW IECharge", "prises": ["CCS"]}, {"id": "FRIENP002402", "nom": "Sablé-sur-Sarthe", "adresse": "La petite Croix, 72300 Sablé-sur-Sarthe", "commune": "Sablé-sur-Sarthe", "cp": "72300", "lat": 47.834549, "lon": -0.357699, "puissance": 320.0, "nbre_pdc": 2, "operateur": "NW IECharge", "prises": ["CCS"]}, {"id": "FRSITE00000248", "nom": "Aire de Pirmil Ouest_A11", "adresse": "Aire de Pirmil Ouest A11 km 197 - 72430 Primil", "commune": "Pirmil", "cp": "72430", "lat": 47.9111059, "lon": -0.086755, "puissance": 300.0, "nbre_pdc": 13, "operateur": "Allego", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRALLPGO000429", "nom": "Aire de Pirmil Ouest_A11", "adresse": "Aire de Pirmil Ouest, A11, km 197", "commune": "Pirmil", "cp": "72430", "lat": 47.9111059, "lon": -0.086755, "puissance": 300.0, "nbre_pdc": 13, "operateur": "Allego", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRSITE00000250", "nom": "Aire de Pirmil Est_A11", "adresse": "Aire de Pirmil Est  A11 km 197 - 72430 Pirmil", "commune": "Pirmil", "cp": "72430", "lat": 47.9122925, "lon": -0.0831179, "puissance": 300.0, "nbre_pdc": 13, "operateur": "Allego", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRALLPGO000428", "nom": "Aire de Pirmil Est_A11", "adresse": "Aire de Pirmil Est, A11, km 197", "commune": "Pirmil", "cp": "72430", "lat": 47.9122925, "lon": -0.0831179, "puissance": 300.0, "nbre_pdc": 13, "operateur": "Allego", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRSITE00000316", "nom": "Aire du Mans Nord_A11", "adresse": "A11 Sortie 7 Le Mans ZI Nord, 72650-Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.051271, "lon": 0.173327, "puissance": 300.0, "nbre_pdc": 15, "operateur": "Allego", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRALLPGO000757", "nom": "Aire de Le Mans Nord_A11", "adresse": "A11 Sortie 7 Le Mans ZI Nord", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.051271, "lon": 0.173327, "puissance": 300.0, "nbre_pdc": 15, "operateur": "Allego", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRATLPFR00858", "nom": "Atlante - Arçonnay - Burger King", "adresse": "Rue Des Coudrays, 2, Arçonnay", "commune": "Arçonnay", "cp": "72610", "lat": 48.40422, "lon": 0.089477, "puissance": 300.0, "nbre_pdc": 14, "operateur": "Atlante France", "prises": ["CCS", "Type 2"]}, {"id": "FRATLPFR00286", "nom": "Atlante - Arçonnay - King Jouet Alençon", "adresse": "Rue du Maine Normandie, , Arçonnay", "commune": "Arçonnay", "cp": "72610", "lat": 48.40814, "lon": 0.08752, "puissance": 300.0, "nbre_pdc": 9, "operateur": "Atlante France", "prises": ["CCS", "Type 2"]}, {"id": "FRELCP12953951", "nom": "Electra Ruaudin - CC Family Village les Hunaudières", "adresse": "1 boulevard des Hunaudières, 72230 Ruaudin", "commune": "Mulsanne", "cp": "72230", "lat": 47.943807, "lon": 0.239637, "puissance": 300.0, "nbre_pdc": 6, "operateur": "Electra", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRHPCPNF080138TOTEM", "nom": "SARTHE SARGE LE MANS NORD", "adresse": "L'OCEANE, 72190 SARGE LES LE MANS", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.056344, "lon": 0.254399, "puissance": 300.0, "nbre_pdc": 16, "operateur": "TotalEnergies Marketing France", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRVIAP103113", "nom": "ENGIE Vianeo - A81 St-Denis d'Orques", "adresse": "Aire de Saint-Denis d'Orques - A81 - 72350 SAINT-DENIS-D'ORQUES", "commune": "Saint-Denis-d'Orques", "cp": "72350", "lat": 48.023719, "lon": -0.325674, "puissance": 300.0, "nbre_pdc": 24, "operateur": "Greenflux", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRVIAP122097", "nom": "ENGIE Vianeo - B&B HOTEL LE MANS NORD 2", "adresse": "Rue Joseph Caillaux 8 - 72650 Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.05181, "lon": 0.16551, "puissance": 300.0, "nbre_pdc": 14, "operateur": "Greenflux", "prises": ["CCS", "Type 2"]}, {"id": "FREFLEV2457638", "nom": "DAF LEMANS", "adresse": " 31 rue des Guinaudières, 72650 Saint Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.05, "lon": 0.16, "puissance": 270.0, "nbre_pdc": 1, "operateur": "E-Flux", "prises": ["CCS"]}, {"id": "FRTSLP1745", "nom": "Le Mans, France", "adresse": "ZAC du Moulin aux Moines, Route d'Alencon", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.041259, "lon": 0.175722, "puissance": 250.0, "nbre_pdc": 32, "operateur": "Tesla", "prises": ["CCS", "Type 2"]}, {"id": "FRTSLP17341", "nom": "Saint-Saturnin, France", "adresse": "3, Rue Louis Chappée", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.053197, "lon": 0.166468, "puissance": 250.0, "nbre_pdc": 86, "operateur": "Tesla", "prises": ["CCS"]}, {"id": "FRALLPGO000672", "nom": "Burger King Le Mans Saint-Saturnin", "adresse": "9 Rue Des Petites Marnieres", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.047642, "lon": 0.170206, "puissance": 200.0, "nbre_pdc": 4, "operateur": "Allego", "prises": ["CCS"]}, {"id": "FRDREP720030001", "nom": "Aria Parc | Conn. 1", "adresse": "1 Rue de la Berardiere, 72003 Allonnes", "commune": "Allonnes", "cp": "72700", "lat": 47.975, "lon": 0.151, "puissance": 200.0, "nbre_pdc": 3, "operateur": "DREAM ENERGY", "prises": ["CCS"]}, {"id": "FRIZFPFAST434", "nom": "IZIVIA FAST - McDonald's -  Le Mans CGR", "adresse": "1 Rue Pique Prunes 72650 Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.05076530113992, "lon": 0.1703193573286021, "puissance": 200.0, "nbre_pdc": 15, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRPD1PITMLLD", "nom": "Intermarché - Le Lude", "adresse": "65 Rte de Saumur", "commune": "Le Lude", "cp": "72800", "lat": 47.639465, "lon": 0.151974, "puissance": 200.0, "nbre_pdc": 12, "operateur": "Power Dot France", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRPD1PLCLLFL", "nom": "E.Leclerc - La Flèche", "adresse": "7 Rue Henri Dunant, 72000 La Flèche, France", "commune": "Le Mans", "cp": "72000", "lat": 47.702005693776, "lon": -0.054514444844058, "puissance": 200.0, "nbre_pdc": 34, "operateur": "Power Dot France", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRQWTP720030001", "nom": "Aria Parc | Conn. 1", "adresse": "1 Rue de la Berardiere, 72003 Allonnes", "commune": "Allonnes", "cp": "72700", "lat": 47.975, "lon": 0.151, "puissance": 200.0, "nbre_pdc": 3, "operateur": "QoWatt", "prises": ["Type 2"]}, {"id": "FRQWTP776696", "nom": "Route de la Rochelle 21", "adresse": "Route de la Rochelle 2179000 Bessines", "commune": "Allonnes", "cp": "72700", "lat": 47.975476658497, "lon": 0.15145223027114, "puissance": 200.0, "nbre_pdc": 6, "operateur": "QoWatt", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRQWTP801271", "nom": "Rue de Poitiers 29", "adresse": "Rue de Poitiers 2979700 Mauléon", "commune": "Allonnes", "cp": "72700", "lat": 47.975476658497, "lon": 0.15145223027114, "puissance": 200.0, "nbre_pdc": 2, "operateur": "QoWatt", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRSSDPVOLVOHUB726501", "nom": "Volvo - Le Mans HUB - powered by DRIVECO", "adresse": "6 Rue de Villeneuve, 72650 Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.048396, "lon": 0.173957, "puissance": 200.0, "nbre_pdc": 6, "operateur": "DRIVECO Partner Network", "prises": ["CCS", "EF", "Type 2"]}, {"id": "Non concerné", "nom": "Esso Arnage", "adresse": "22 Avvenue nationale, 72230 Arnage", "commune": "Arnage", "cp": "72230", "lat": 47.933208, "lon": 0.187339, "puissance": 180.0, "nbre_pdc": 9, "operateur": "C4Energies", "prises": ["Type 2"]}, {"id": "FRLDLPLFR3548EVCP", "nom": "LE MANS Edison", "adresse": "8 RUE THOMAS EDISON", "commune": "Le Mans", "cp": "72000", "lat": 48.025203, "lon": 0.180257, "puissance": 180.0, "nbre_pdc": 6, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR4292EVCP", "nom": "MAREIL EN CHAMPAGNE Molière", "adresse": "1  rue de la Molière", "commune": "Mareil-en-Champagne", "cp": "72540", "lat": 47.987479, "lon": -0.164533, "puissance": 180.0, "nbre_pdc": 12, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRHPCPNF059902TOTEM", "nom": "SARTHE SARGE LE MANS SUD", "adresse": "L'OCEANE, 72190 SARGE LES LE MANS", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.055456, "lon": 0.252268, "puissance": 175.0, "nbre_pdc": 8, "operateur": "TotalEnergies Marketing France", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRHPCPNF059902", "nom": "SARTHE SARGE LE MANS SUD", "adresse": "A11 - AIRE SARTHE SARGE LE MANSS", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.0553, "lon": 0.252, "puissance": 175.0, "nbre_pdc": 8, "operateur": "TotalEnergies Charging Services", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRHPCPNF080138", "nom": "SARTHE SARGE LE MANS NORD", "adresse": "A11-AIRE SARTHE SARGE LE MANS NO", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.0558, "lon": 0.2552, "puissance": 175.0, "nbre_pdc": 8, "operateur": "TotalEnergies Charging Services", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRATLPPORT6501", "nom": "Atlante -  Saint Saturnin - Le Portofino", "adresse": "Rue Louis Chappée, 7, Saint-Saturnin", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.052051, "lon": 0.166481, "puissance": 150.0, "nbre_pdc": 9, "operateur": "Atlante France", "prises": ["CCS", "Type 2"]}, {"id": "FRATLPFR00542", "nom": "Atlante - Arnage - Hôtel Restaurant Campanile Le Mans Sud Arnage", "adresse": "Rue de la Gemerie, , Arnage", "commune": "Arnage", "cp": "72230", "lat": 47.9429, "lon": 0.1814, "puissance": 150.0, "nbre_pdc": 6, "operateur": "Atlante France", "prises": ["CCS", "Type 2"]}, {"id": "FRE04POAZS273", "nom": "NORAUTO - ALLONNES", "adresse": "Norauto, Rue de la Raterie, Zone d'aménagement commerciale du Vivier, 72700 Allonnes", "commune": "Allonnes", "cp": "72700", "lat": 47.975755, "lon": 0.15792, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRETIP72154A", "nom": "e-Totem - Bricomarché La Fleche 1", "adresse": "Bd du Québec 72200 La Flèche", "commune": "La Flèche", "cp": "72200", "lat": 47.70435674796952, "lon": -0.09086791302214382, "puissance": 150.0, "nbre_pdc": 12, "operateur": "E-TOTEM", "prises": ["CCS", "Type 2"]}, {"id": "FRHPCPNF080150", "nom": "RELAIS MARESCHE", "adresse": "A28 GARE DE PEAGE MARESCHE, 72170 MARESCHE", "commune": "Maresché", "cp": "72170", "lat": 48.197319, "lon": 0.169097, "puissance": 150.0, "nbre_pdc": 2, "operateur": "TotalEnergies Marketing France", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRIGFPFRAI30", "nom": "IZIVIA MAX - GRAND FRAIS - SARGÉ-LÈS-LE-MANS", "adresse": "Rue des Frènes 72190 Sargé-lès-le-Mans", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.0245525, "lon": 0.2395174, "puissance": 150.0, "nbre_pdc": 10, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST121", "nom": "IZIVIA FAST - McDonald's -  Le Mans Nord", "adresse": "1 Lotissement Commercial Détroit 72650 La Chapelle-Saint-Aubin", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.03668497283907, "lon": 0.1753439588607808, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST243", "nom": "IZIVIA FAST - McDonald's - Sable sur Sarthe", "adresse": "Routes de Solesmes, Parc de la Tuilerie 72300 Sablé-sur-Sarthe", "commune": "Solesmes", "cp": "72300", "lat": 47.8382840504821, "lon": -0.29916719206543263, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST288", "nom": "IZIVIA FAST - McDonald's - Allonnes", "adresse": "Rue de la Raterie 72700 Allonnes", "commune": "Allonnes", "cp": "72700", "lat": 47.97455381211864, "lon": 0.15872431018754352, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST592", "nom": "IZIVIA FAST - McDonald's - LA FERTE BERNARD", "adresse": "3 Avenue du Général de Gaulle 72400 LA FERTE BERNARD", "commune": "La Ferté-Bernard", "cp": "72400", "lat": 48.180968573281, "lon": 0.652593035748101, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST618", "nom": "IZIVIA FAST - McDonald's - ARCONNAY", "adresse": "ZA Du Petit Coudray 72610 ARCONNAY", "commune": "Arçonnay", "cp": "72610", "lat": 48.405715931442, "lon": 0.0884145953800261, "puissance": 150.0, "nbre_pdc": 6, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST653", "nom": "IZIVIA FAST - McDonald's - La Flèche", "adresse": "La Monnerie 72200 La Flèche", "commune": "La Flèche", "cp": "72200", "lat": 47.7036396255164, "lon": -0.05349225032567209, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FRIZFPFAST742", "nom": "IZIVIA FAST - McDonald's - Mamers", "adresse": "11 Route de Belleme 72600 Mamers", "commune": "Mamers", "cp": "72600", "lat": 48.35022600767137, "lon": 0.38542388630864177, "puissance": 150.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "Type 2"]}, {"id": "FREVZP92B39C4E36764304999378F5A57AF", "nom": "EVzen - Coulaines, Alpha Services Coulaines", "adresse": "Rue Jean Cocteau Et Bd Saint Nicolas 72190 Coulaines", "commune": "Coulaines", "cp": "72190", "lat": 48.028683, "lon": 0.202702, "puissance": 120.0, "nbre_pdc": 5, "operateur": "EVzen", "prises": ["CCS", "Type 2"]}, {"id": "FRLDLPLFR3738EVCP", "nom": "LE MANS Breguet", "adresse": "28 Rue Louis Breguet", "commune": "Le Mans", "cp": "72100", "lat": 47.975995, "lon": 0.166001, "puissance": 120.0, "nbre_pdc": 8, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR3556EVCP", "nom": "YVRE L'EVEQUE  RN 23", "adresse": "23 route de Paris", "commune": "Yvré-l'Évêque", "cp": "72530", "lat": 48.00158, "lon": 0.245485, "puissance": 120.0, "nbre_pdc": 4, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR2369EVCP", "nom": "ARCONNAY", "adresse": "2 Rte du Mans", "commune": "Arçonnay", "cp": "72610", "lat": 48.3975341, "lon": 0.0895985, "puissance": 120.0, "nbre_pdc": 8, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR2911EVCP", "nom": "LE MANS Geneslay", "adresse": "450 Av. Félix Geneslay", "commune": "Le Mans", "cp": "72100", "lat": 47.963977, "lon": 0.201249, "puissance": 120.0, "nbre_pdc": 6, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR4018EVCP", "nom": "ST LONGIS - Saint-Jean", "adresse": "2 lieu-dit Le Haut Saint Jean 72600 Saint-Longis", "commune": "Saint-Longis", "cp": "72600", "lat": 48.352815, "lon": 0.356473, "puissance": 120.0, "nbre_pdc": 18, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR4241EVCP", "nom": "ECOMMOY Mans", "adresse": "116 Route du Mans", "commune": "Écommoy", "cp": "72220", "lat": 47.837727, "lon": 0.26509, "puissance": 120.0, "nbre_pdc": 16, "operateur": "LIDL France", "prises": ["CCS", "EF", "Type 2"]}, {"id": "FRLDLPLFR3239EVCP", "nom": "LA FERTE BERNARD", "adresse": "41 AVENUE DU GÉNÉRAL DE GAULLE", "commune": "La Ferté-Bernard", "cp": "72400", "lat": 48.18029047100344, "lon": 0.6541058274027557, "puissance": 120.0, "nbre_pdc": 2, "operateur": "LIDL France", "prises": ["CCS"]}, {"id": "FRPD1PSUPSAB", "nom": "Super U - Sablé-sur-Sarthe", "adresse": "2 Rue de Plaisance, 72300 Sablé-sur-Sarthe, France", "commune": "Sablé-sur-Sarthe", "cp": "72300", "lat": 47.850226, "lon": -0.350858, "puissance": 120.0, "nbre_pdc": 4, "operateur": "Power Dot France", "prises": ["CCS", "CHAdeMO"]}, {"id": "FRPD1PACCSAT", "nom": "hotelF1 - Saint-Saturnin", "adresse": "5 Rue Joseph Caillaux, 72650 Saint-Saturnin, France", "commune": "Saint-Saturnin", "cp": "72650", "lat": 48.051586823503, "lon": 0.16480546938095, "puissance": 100.0, "nbre_pdc": 12, "operateur": "Power Dot France", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRPD1PDSJRAD", "nom": "Centre Commercial Maine Street Super U - Ruaudin", "adresse": "2 Bd des Hunaudières, 72230 Ruaudin, France", "commune": "Ruaudin", "cp": "72230", "lat": 47.94410801637, "lon": 0.2406495609825, "puissance": 100.0, "nbre_pdc": 24, "operateur": "Power Dot France", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRE04POAZS271", "nom": "NORAUTO - LA FLÈCHE", "adresse": "Norauto, Rue du Levant 72200 La Flèche", "commune": "La Flèche", "cp": "72200", "lat": 47.704318, "lon": -0.053254, "puissance": 63.0, "nbre_pdc": 5, "operateur": "IZIVIA", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRPD1PSYUMEC", "nom": "Super U - Mareil-en-Champagne", "adresse": "RTE Lieudit la Grangerte, 72540 Mareil-en-Champagne", "commune": "Mareil-en-Champagne", "cp": "72540", "lat": 47.987574926686, "lon": -0.16273856679534, "puissance": 60.0, "nbre_pdc": 12, "operateur": "Power Dot France", "prises": ["CCS", "CHAdeMO", "Type 2"]}, {"id": "FRDRVPCRFMKT721201", "nom": "Carrefour Market - Saint-Calais Pressoir", "adresse": "ZA du Pressoir 10 Rue du Champ de la Croix, 72120 Saint-Calais", "commune": "Saint-Calais", "cp": "72120", "lat": 47.917689, "lon": 0.766001, "puissance": 50.0, "nbre_pdc": 8, "operateur": "DRIVECO", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRDRVPDLNV", "nom": "Carrefour Market - Connerre", "adresse": "Rue de Paris, 72160 Connerre", "commune": "Connerré", "cp": "72160", "lat": 48.063363, "lon": 0.508557, "puissance": 50.0, "nbre_pdc": 8, "operateur": "DRIVECO", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRDRVPCRFMKT722301", "nom": "Carrefour Market - Mulsanne", "adresse": "Av. de Bonen, 72230 Mulsanne", "commune": "Mulsanne", "cp": "72230", "lat": 47.91344, "lon": 0.245753, "puissance": 50.0, "nbre_pdc": 8, "operateur": "DRIVECO", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRDRVPCRFMKT723301", "nom": "Carrefour Market - Cerans Foulletourte", "adresse": "Centre Commercial De 62 Rue nationale, 72330 Cérans-Foulletourte", "commune": "Cérans-Foulletourte", "cp": "72330", "lat": 47.829672, "lon": 0.076881, "puissance": 50.0, "nbre_pdc": 8, "operateur": "DRIVECO", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRDRVPCRFMKT724001", "nom": "Carrefour Market - La Ferte-Bernard", "adresse": "Av. Pierre Brûle, 72400 La Ferté-Bernard", "commune": "La Ferté-Bernard", "cp": "72400", "lat": 48.181398, "lon": 0.661755, "puissance": 50.0, "nbre_pdc": 8, "operateur": "DRIVECO", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRDRVPCRFMKT723001", "nom": "Carrefour Market - Sable-Sur-Sarthe", "adresse": "Rte de la Flèche, 72300 Sablé-sur-Sarthe", "commune": "Sablé-sur-Sarthe", "cp": "72300", "lat": 47.831179, "lon": -0.315201, "puissance": 50.0, "nbre_pdc": 8, "operateur": "DRIVECO", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRSE1PSE72BACA", "nom": "Place Jean Dufournier - BESSE SUR BRAYE", "adresse": "Place Jean Dufournier, 72310 BESSE SUR BRAYE", "commune": "Bessé-sur-Braye", "cp": "72310", "lat": 47.833417, "lon": 0.753487, "puissance": 24.0, "nbre_pdc": 5, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72CABA", "nom": "CITROEN - CERANS FOULLETOURTE", "adresse": "171 rue Nationale, 72330 CERANS FOULLETOURTE", "commune": "Cérans-Foulletourte", "cp": "72330", "lat": 47.824714, "lon": 0.073389, "puissance": 24.0, "nbre_pdc": 4, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72FBAA", "nom": "Ludothèque - LA FERTE BERNARD", "adresse": "1 Rue Alfred Marchand, 72400 LA FERTE BERNARD", "commune": "La Ferté-Bernard", "cp": "72400", "lat": 48.183658, "lon": 0.651662, "puissance": 24.0, "nbre_pdc": 4, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72FBBA", "nom": "Place de la république - LA FERTE BERNARD", "adresse": "7 Rue Robert Garnier, 72400 LA FERTE BERNARD", "commune": "La Ferté-Bernard", "cp": "72400", "lat": 48.186522, "lon": 0.653937, "puissance": 24.0, "nbre_pdc": 4, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72FBCA", "nom": "Mc Donald - LA FERTE BERNARD", "adresse": "3 Av. du Général de Gaulle, 72400 LA FERTE BERNARD", "commune": "La Ferté-Bernard", "cp": "72400", "lat": 48.181304, "lon": 0.652222, "puissance": 24.0, "nbre_pdc": 4, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72SABA", "nom": "SAINT-COSME-EN-VAIRAIS - Place Saint-Damien", "adresse": "Pl. Saint-Damien, 72110 ST COSME EN VAIRAIS", "commune": "Saint-Cosme-en-Vairais", "cp": "72110", "lat": 48.274377, "lon": 0.459947, "puissance": 24.0, "nbre_pdc": 5, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72SACA", "nom": "UTILE - ST GEORGES DU BOIS", "adresse": "Parc des Hayes, 1 Av. des Constellations, 72700 SAINT GEORGES DU BOIS", "commune": "Saint-Georges-du-Bois", "cp": "72700", "lat": 47.96688, "lon": 0.093458, "puissance": 24.0, "nbre_pdc": 4, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FRSE1PSE72SADA", "nom": "Rue de l'école - Sceaux-sur-Huisne", "adresse": "4 Rue de l'École, 72160 SCEAUX SUR HUISNE", "commune": "Sceaux-sur-Huisne", "cp": "72160", "lat": 48.104858, "lon": 0.584791, "puissance": 24.0, "nbre_pdc": 4, "operateur": "STATIONS-E", "prises": ["CCS", "Type 2"]}, {"id": "FR55CP72130GGAP3PC", "nom": "PARKING COVOITURAGE - GESNES-LE-GANDELIN", "adresse": "2 Rue Grande Rue 72130 Gesnes-le-Gandelin", "commune": "Gesnes-le-Gandelin", "cp": "72130", "lat": 48.354995, "lon": 0.015068, "puissance": 22.08, "nbre_pdc": 2, "operateur": "ELECTRIC 55 CHARGING", "prises": ["Type 2"]}, {"id": "FRC2N100795828", "nom": "SCI CONGLOMERAT", "adresse": "157 Boulevard Pierre Lefaucheux, Arnage, France 72230", "commune": "Arnage", "cp": "72230", "lat": 47.93451930000001, "lon": 0.1876031, "puissance": 22.08, "nbre_pdc": 1, "operateur": "CAR2PLUG", "prises": ["EF", "Type 2"]}, {"id": "FRC2N931237967", "nom": "SCI CONGLOMERAT", "adresse": "157 Boulevard Pierre Lefaucheux, Arnage, France 72230", "commune": "Arnage", "cp": "72230", "lat": 47.93451930000001, "lon": 0.1876031, "puissance": 22.08, "nbre_pdc": 1, "operateur": "CAR2PLUG", "prises": ["EF", "Type 2"]}, {"id": "FRIDXP91355366", "nom": "Parking Zoo de la Flèche", "adresse": "Le Tertre Rouge", "commune": "La Flèche", "cp": "72200", "lat": 47.677576, "lon": -0.04594, "puissance": 22.08, "nbre_pdc": 26, "operateur": "Idex", "prises": ["Type 2"]}, {"id": "FRALNP25007039", "nom": "CONLIE", "adresse": "ALDI, 29 Rue du Mans, 72240 Conlie, France", "commune": "Conlie", "cp": "72240", "lat": 48.120507, "lon": -0.013525, "puissance": 22.0, "nbre_pdc": 4, "operateur": "ALDI SARL", "prises": ["EF", "Type 2"]}, {"id": "FRALNP25007064", "nom": "LA SUZE-SUR-SARTHE", "adresse": "ALDI, Rue Marie Pape Carpentier, 72210 La Suze-sur-Sarthe, France", "commune": "La Suze-sur-Sarthe", "cp": "72210", "lat": 47.892279, "lon": 0.04132, "puissance": 22.0, "nbre_pdc": 4, "operateur": "ALDI SARL", "prises": ["EF", "Type 2"]}, {"id": "FRALNP25007077", "nom": "MONTVAL-SUR-LOIR", "adresse": "1 Avenue De Tours 72500 MONTVAL-SUR-LOIR", "commune": "Montval-sur-Loir", "cp": "72500", "lat": 47.689868, "lon": 0.42661, "puissance": 22.0, "nbre_pdc": 4, "operateur": "ALDI SARL", "prises": ["EF", "Type 2"]}, {"id": "FRALNP25007078", "nom": "SARGE LES LE MANS", "adresse": "400 Rte de Bonnétable, 72190 Sargé-lès-le-Mans, France", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.026206, "lon": 0.23655, "puissance": 22.0, "nbre_pdc": 4, "operateur": "ALDI SARL", "prises": ["EF", "Type 2"]}, {"id": "FRALNP25007090", "nom": "ECOMMOY", "adresse": "37 Route du Mans, Écommoy, France", "commune": "Écommoy", "cp": "72220", "lat": 47.832771, "lon": 0.269119, "puissance": 22.0, "nbre_pdc": 4, "operateur": "ALDI SARL", "prises": ["EF", "Type 2"]}, {"id": "FRALNP25007112", "nom": "BEAUMONT-SUR-SARTHE", "adresse": "Angle Rue Des Alpes Mancelles D39 Et Route De La Maufiere 72170 BEAUMONT-SUR-SARTHE", "commune": "Beaumont-sur-Sarthe", "cp": "72170", "lat": 48.232093, "lon": 0.122048, "puissance": 22.0, "nbre_pdc": 4, "operateur": "ALDI SARL", "prises": ["EF", "Type 2"]}, {"id": "FRETIP72058A", "nom": "e-Totem - Domaine de la blanchardière ", "adresse": "Lieu dit La Blanchardière 72560 Changé", "commune": "Changé", "cp": "72560", "lat": 47.99013663047372, "lon": 0.2677415428742836, "puissance": 22.0, "nbre_pdc": 12, "operateur": "E-TOTEM", "prises": ["Type 2"]}, {"id": "FRLDLPLFR0708EVCP", "nom": "LA FLECHE", "adresse": "rue Henri Dunant", "commune": "La Flèche", "cp": "72200", "lat": 47.701895, "lon": -0.060477, "puissance": 22.0, "nbre_pdc": 8, "operateur": "LIDL France", "prises": ["EF", "Type 2"]}, {"id": "FRLMSP91355366", "nom": "Zoo de La Flèche", "adresse": "Le Tertre Rouge", "commune": "La Flèche", "cp": "72200", "lat": 47.677576, "lon": -0.04594, "puissance": 22.0, "nbre_pdc": 24, "operateur": "IDEX SOLAR CHARGING STATIONS", "prises": ["Type 2"]}, {"id": "FROTHPOTHR62931", "nom": "LA CHAPELLE ST AUBIN LE MANS", "adresse": "- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.041846, "lon": 0.175245, "puissance": 22.0, "nbre_pdc": 1, "operateur": "Izivia", "prises": ["Type 2"]}, {"id": "FROTHPOTHR62932", "nom": "LA CHAPELLE ST AUBIN LE MANS", "adresse": "- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.041846, "lon": 0.175245, "puissance": 22.0, "nbre_pdc": 1, "operateur": "Izivia", "prises": ["EF", "Type 2"]}, {"id": "FROTHPOTHR62941", "nom": "LA CHAPELLE ST AUBIN LE MANS", "adresse": "- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.041846, "lon": 0.175245, "puissance": 22.0, "nbre_pdc": 1, "operateur": "Izivia", "prises": ["Type 2"]}, {"id": "FROTHPOTHR62942", "nom": "LA CHAPELLE ST AUBIN LE MANS", "adresse": "- ZAC DU MOULIN AUX MOINES 72650 LA CHAPELLE ST AUBIN", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.041846, "lon": 0.175245, "puissance": 22.0, "nbre_pdc": 1, "operateur": "Izivia", "prises": ["EF", "Type 2"]}, {"id": "FRQVI7200011", "nom": "25 Rue du Val de Braye", "adresse": "25 Rue du Val de Braye 72310 BESSE SUR BRAYE", "commune": "Bessé-sur-Braye", "cp": "72310", "lat": 47.8316813, "lon": 0.7552939, "puissance": 22.0, "nbre_pdc": 5, "operateur": "QOVOLTIS", "prises": []}, {"id": "FRQVI7200006", "nom": "12 Rue du champ de la Croix, ZA du pressoir hotel", "adresse": "12 Rue du champ de la Croix, ZA du pressoir hotel 72120 SAINT CALAIS", "commune": "Écorpain", "cp": "72120", "lat": 47.91873, "lon": 0.76592, "puissance": 22.0, "nbre_pdc": 3, "operateur": "QOVOLTIS", "prises": []}, {"id": "FRQVI7205347", "nom": "2 ld, Meslay", "adresse": "2 ld, Meslay 72610 FYE", "commune": "Fyé", "cp": "72610", "lat": 48.3312545, "lon": 0.0448862, "puissance": 22.0, "nbre_pdc": 2, "operateur": "QOVOLTIS", "prises": []}, {"id": "FRQWTP733981", "nom": "1 Rue de la Berardiere, 72700 Allonnes", "adresse": "1 Rue de la Berardiere, 72700 Allonnes72700 Allonnes", "commune": "Allonnes", "cp": "72700", "lat": 47.975476658497, "lon": 0.15145223027114, "puissance": 22.0, "nbre_pdc": 1, "operateur": "QoWatt", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRQWTP807449", "nom": "Rue du Grand Faubourg 45", "adresse": "Rue du Grand Faubourg 4526230 Grignan", "commune": "Allonnes", "cp": "72700", "lat": 47.975476658497, "lon": 0.15145223027114, "puissance": 22.0, "nbre_pdc": 2, "operateur": "QoWatt", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRQWTP807441", "nom": "Rue du Grand Faubourg 45", "adresse": "Rue du Grand Faubourg 4526230 Grignan", "commune": "Allonnes", "cp": "72700", "lat": 47.975476658497, "lon": 0.15145223027114, "puissance": 22.0, "nbre_pdc": 4, "operateur": "QoWatt", "prises": ["CCS", "CHAdeMO", "EF", "Type 2"]}, {"id": "FRSGAP1M2121", "nom": "M2121", "adresse": "Route de Coémont 72800 Le Lude", "commune": "Le Lude", "cp": "72800", "lat": 47.673519, "lon": 0.110747, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2156", "nom": "M2156", "adresse": "24 Rue de la Mairie 72160 Tuffé Val de la Cheronne", "commune": "Tuffé Val de la Chéronne", "cp": "72160", "lat": 48.110359, "lon": 0.52138, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2189", "nom": "M2189", "adresse": "240 Le Parc 72700 Spay", "commune": "Spay", "cp": "72700", "lat": 47.941623, "lon": 0.161594, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2191", "nom": "M2191", "adresse": "297 Le Parc 72700 Spay", "commune": "Spay", "cp": "72700", "lat": 47.942226, "lon": 0.163312, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2209", "nom": "M2209", "adresse": "Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.037418, "lon": 0.174383, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2210", "nom": "M2210", "adresse": "Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.037418, "lon": 0.174383, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2213", "nom": "M2213", "adresse": "Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.037418, "lon": 0.174383, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2214", "nom": "M2214", "adresse": "Rue Louis Delage Les Alivernays 72650 La Chapelle-Saint-Aubin", "commune": "La Chapelle-Saint-Aubin", "cp": "72650", "lat": 48.037418, "lon": 0.174383, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1M2216", "nom": "M2216", "adresse": "ZA Le Chapeau 72190 Neuville-sur-Sarthe", "commune": "Neuville-sur-Sarthe", "cp": "72190", "lat": 48.047573, "lon": 0.214709, "puissance": 22.0, "nbre_pdc": 3, "operateur": "SGA Industries", "prises": ["EF", "Type 2"]}, {"id": "FRSGAP1SB002", "nom": "SB002", "adresse": "129 Boulevard Pierre le faucheux 72230 Arnage", "commune": "Arnage", "cp": "72230", "lat": 47.940597, "lon": 0.185348, "puissance": 22.0, "nbre_pdc": 1, "operateur": "SGA Industries", "prises": ["Type 2"]}, {"id": "FRSGAP1SB003", "nom": "SB003", "adresse": "129 Boulevard Pierre le faucheux 72230 Arnage", "commune": "Arnage", "cp": "72230", "lat": 47.940597, "lon": 0.185348, "puissance": 22.0, "nbre_pdc": 1, "operateur": "SGA Industries", "prises": ["Type 2"]}, {"id": "FRSYSELMSPAT", "nom": "Patte d'oie", "adresse": "Boulevard Demorieux - Parking", "commune": "Le Mans", "cp": "72100", "lat": 47.977284, "lon": 0.172916, "puissance": 22.0, "nbre_pdc": 1, "operateur": "See You Sun", "prises": ["Type 2"]}, {"id": "FRZP1PEAC49680", "nom": "Garage Loué Automobiles - 22 kW AC", "adresse": "1 zone artisanale les bates", "commune": "Loué", "cp": "72540", "lat": 47.99211944, "lon": -0.13781439, "puissance": 22.0, "nbre_pdc": 1, "operateur": "Zephyre SAS", "prises": ["CHAdeMO", "Type 2"]}, {"id": "FRSYSELMSSGDB", "nom": "Saint-Georges-du-bois", "adresse": "Rue Saint-Bartholoma / 22 Rue de Souligné", "commune": "Saint-Georges-du-Bois", "cp": "72700", "lat": 47.972872, "lon": 0.095828, "puissance": 7.4, "nbre_pdc": 1, "operateur": "See You Sun", "prises": ["Type 2"]}, {"id": "FRSYSELMSFON", "nom": "Les Fontenelles", "adresse": "Chemin du villaret", "commune": "Le Mans", "cp": "72100", "lat": 48.018384, "lon": 0.237465, "puissance": 7.4, "nbre_pdc": 1, "operateur": "See You Sun", "prises": ["Type 2"]}, {"id": "FRSYSELMSSAR", "nom": "Sargé Capucines", "adresse": "14 Rue des Capucines", "commune": "Sargé-lès-le-Mans", "cp": "72190", "lat": 48.033895, "lon": 0.24189, "puissance": 7.4, "nbre_pdc": 1, "operateur": "See You Sun", "prises": ["Type 2"]}];
+
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function localiser() {
+  const btn = document.getElementById('btn-geoloc');
+  btn.textContent = '⏳ Localisation en cours...';
+  btn.disabled = true;
+
+  if (!navigator.geolocation) {
+    btn.textContent = '❌ Geolocalisation non supportee';
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const uLat = pos.coords.latitude;
+      const uLon = pos.coords.longitude;
+
+      const distances = {};
+      STATIONS.forEach(s => {
+        if (s.lat && s.lon) {
+          distances[s.id] = distanceKm(uLat, uLon, s.lat, s.lon);
+        }
+      });
+
+      document.querySelectorAll('.station').forEach(card => {
+        const sid = card.dataset.id;
+        const d = distances[sid];
+        const span = card.querySelector('.distance');
+        if (d !== undefined) {
+          if (d < 1) span.textContent = '📍 ' + Math.round(d*1000) + ' m';
+          else span.textContent = '📍 ' + d.toFixed(1) + ' km';
+        }
+      });
+
+      const liste = document.getElementById('liste');
+      const cards = Array.from(liste.querySelectorAll('.station'));
+      cards.sort((a, b) => {
+        const da = distances[a.dataset.id] !== undefined ? distances[a.dataset.id] : 99999;
+        const db = distances[b.dataset.id] !== undefined ? distances[b.dataset.id] : 99999;
+        return da - db;
+      });
+      liste.innerHTML = '';
+      cards.forEach(c => liste.appendChild(c));
+
+      cards.slice(0, 3).forEach(c => c.classList.add('proche'));
+
+      btn.textContent = '✅ Trie par distance — actualiser';
+      btn.classList.add('actif');
+      btn.disabled = false;
+    },
+    (err) => {
+      btn.textContent = '❌ Position refusee — reessayer';
+      btn.disabled = false;
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+  );
+}
+
+function filtre(type, btn) {
+  document.querySelectorAll('.filtre').forEach(b => b.classList.remove('actif'));
+  btn.classList.add('actif');
+  document.querySelectorAll('.station').forEach(s => {
+    const p = parseFloat(s.dataset.puissance);
+    if (type === 'toutes') s.classList.remove('cache');
+    else if (type === 'rapide') s.classList.toggle('cache', p < 50);
+    else if (type === 'ultra') s.classList.toggle('cache', p < 150);
+  });
+}
+</script>
+</body>
+</html>

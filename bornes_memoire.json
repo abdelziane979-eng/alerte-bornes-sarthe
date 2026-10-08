@@ -1,4 +1,20 @@
 {
+  "FR55CP72130GGAP3PC": {
+    "id": "FR55CP72130GGAP3PC",
+    "nom": "PARKING COVOITURAGE - GESNES-LE-GANDELIN",
+    "adresse": "2 Rue Grande Rue 72130 Gesnes-le-Gandelin",
+    "commune": "Gesnes-le-Gandelin",
+    "cp": "72130",
+    "lat": "48.354995",
+    "lon": "0.015068",
+    "operateur": "ELECTRIC 55 CHARGING",
+    "enseigne": "ELECTRIC 55 CHARGING",
+    "puissance_max": 22.08,
+    "nbre_pdc": 2,
+    "prises": [
+      "Type 2"
+    ]
+  },
   "FRALLPGO000672": {
     "id": "FRALLPGO000672",
     "nom": "Burger King Le Mans Saint-Saturnin",
@@ -2050,7 +2066,7 @@
     "lon": "0.172916",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
@@ -2066,7 +2082,7 @@
     "lon": "0.24189",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun",
-    "puissance_max": 22.0,
+    "puissance_max": 7.4,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
