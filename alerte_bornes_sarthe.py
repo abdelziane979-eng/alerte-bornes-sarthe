@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 Alerte Bornes de Recharge - Sarthe (72)
-Utilise le fichier CSV local si present, sinon telecharge depuis data.gouv.fr
-+ Geolocalisation et navigation
+Geolocalisation + icones PNG + version GitHub avec 2 sujets ntfy
 """
 
 import requests
@@ -13,16 +12,17 @@ import os
 import glob
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from PIL import Image, ImageDraw
 
 # ============================================================
 # CONFIGURATION
 # ============================================================
 
-SUJET_NOUVELLES = "alerte-bornes-sarthe"
-SUJET_RETRAITS = "alerte-bornes-sarthe-maj"
+SUJET_NOUVELLES = os.environ.get("NTFY_TOPIC_NOUVELLES", "alerte-bornes-sarthe")
+SUJET_RETRAITS = os.environ.get("NTFY_TOPIC_RETRAITS", "alerte-bornes-sarthe-maj")
 
 FICHIER_MEMOIRE = "bornes_memoire.json"
-DOSSIER_PUBLIC = "public"
+DOSSIER_PUBLIC = "."
 
 URL_DATASET = "https://www.data.gouv.fr/api/1/datasets/fichier-consolide-des-bornes-de-recharge-pour-vehicules-electriques/"
 
@@ -44,6 +44,52 @@ def sauvegarder_json(fichier, data):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
+def creer_icones_png():
+    """Genere les icones PNG 192x192 et 512x512 - eclair vert."""
+    for taille in (192, 512):
+        img = Image.new("RGBA", (taille, taille), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(img)
+
+        marge = taille // 16
+        draw.rounded_rectangle(
+            [marge, marge, taille - marge, taille - marge],
+            radius=taille // 8,
+            fill=(5, 150, 105, 255),
+        )
+
+        draw.polygon([
+            (int(taille * 0.52), int(taille * 0.12)),
+            (int(taille * 0.30), int(taille * 0.55)),
+            (int(taille * 0.46), int(taille * 0.55)),
+            (int(taille * 0.42), int(taille * 0.88)),
+            (int(taille * 0.68), int(taille * 0.42)),
+            (int(taille * 0.52), int(taille * 0.42)),
+            (int(taille * 0.60), int(taille * 0.12)),
+        ], fill=(255, 255, 255, 255))
+
+        img.save(f"icon-{taille}.png")
+        print(f"   Icone {taille}x{taille} generee")
+
+
+def creer_manifest():
+    manifest = {
+        "name": "Alerte Bornes Sarthe",
+        "short_name": "Alerte Bornes",
+        "description": "Bornes de recharge en Sarthe",
+        "start_url": "./",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#059669",
+        "icons": [
+            {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+            {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"},
+        ],
+    }
+    with open("manifest.json", "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2, ensure_ascii=False)
+    print(f"   Manifest cree")
+
+
 def envoyer_notification(sujet, titre, message):
     try:
         requests.post(
@@ -62,22 +108,19 @@ def envoyer_notification(sujet, titre, message):
 
 
 def trouver_fichier_local():
-    """Cherche un fichier CSV IRVE deja telecharge dans le dossier courant."""
     for f in glob.glob("*.csv"):
         if "irve" in f.lower() and "documentation" not in f.lower():
             taille = os.path.getsize(f)
-            if taille > 10 * 1024 * 1024:  # > 10 Mo
+            if taille > 10 * 1024 * 1024:
                 return f
     return None
 
 
 def trouver_url_fichier_irve():
-    """Trouve l'URL du fichier IRVE consolide le plus recent."""
     try:
         r = requests.get(URL_DATASET, timeout=30)
         r.raise_for_status()
         data = r.json()
-
         resources = data.get("resources", [])
         candidats = []
         for res in resources:
@@ -94,45 +137,36 @@ def trouver_url_fichier_irve():
                 continue
             date = res.get("last_modified") or res.get("created_at") or ""
             candidats.append((date, url, res.get("title")))
-
         if not candidats:
             print("[ERREUR] Aucune ressource CSV consolidee trouvee")
             return None
-
         candidats.sort(reverse=True)
         print(f"   Fichier retenu : {candidats[0][2]}")
         return candidats[0][1]
-
     except Exception as e:
         print(f"[ERREUR] API data.gouv.fr : {e}")
         return None
 
 
 def extraire_bornes_sarthe(content):
-    """Extrait les bornes de la Sarthe depuis le contenu CSV."""
     bornes = []
     total = 0
-
     sample = content[:4096].decode("utf-8-sig", errors="ignore")
     sep = "," if sample.count(",") > sample.count(";") else ";"
-
     reader = csv.DictReader(
         io.StringIO(content.decode("utf-8-sig", errors="replace")),
         delimiter=sep,
     )
-
     for row in reader:
         total += 1
         cp = str(row.get("consolidated_code_postal", "") or "").strip()
         if cp.startswith("72"):
             bornes.append(row)
-
     print(f"   Total lignes : {total} | Bornes en Sarthe : {len(bornes)}")
     return bornes
 
 
 def charger_bornes():
-    """Charge les bornes depuis le fichier local ou via telechargement."""
     fichier_local = trouver_fichier_local()
     if fichier_local:
         print(f"   Fichier local trouve : {fichier_local}")
@@ -150,7 +184,6 @@ def charger_bornes():
     url = trouver_url_fichier_irve()
     if not url:
         return []
-
     try:
         r = requests.get(url, timeout=300, stream=True)
         r.raise_for_status()
@@ -221,10 +254,7 @@ def grouper_par_station(bornes):
     return stations
 
 
-def generer_page_html(stations):
-    """Genere la page web optimisee mobile avec geolocalisation."""
-    os.makedirs(DOSSIER_PUBLIC, exist_ok=True)
-
+def generer_page_html(stations, chemin="index.html"):
     paris = datetime.now(ZoneInfo("Europe/Paris"))
     date_heure = paris.strftime("%d/%m/%Y a %Hh%M")
 
@@ -234,7 +264,6 @@ def generer_page_html(stations):
     nb_rapides = len([s for s in stations_triees if s["puissance_max"] >= 50])
     nb_ultra = len([s for s in stations_triees if s["puissance_max"] >= 150])
 
-    # Construire les donnees JSON pour le JS
     stations_json = []
     for s in stations_triees:
         lat = None
@@ -314,6 +343,10 @@ def generer_page_html(stations):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bornes Sarthe</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#059669">
 <style>
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -481,7 +514,7 @@ function filtre(type, btn) {{
 </body>
 </html>'''
 
-    with open(os.path.join(DOSSIER_PUBLIC, "index.html"), "w", encoding="utf-8") as f:
+    with open(chemin, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"   Page HTML generee ({len(stations_triees)} stations)")
 
@@ -548,6 +581,10 @@ def main():
 
     print("\n-> Generation de la page web...")
     generer_page_html(stations_actuelles)
+
+    print("-> Generation des icones...")
+    creer_icones_png()
+    creer_manifest()
 
     sauvegarder_json(FICHIER_MEMOIRE, stations_actuelles)
     print(f"\nMemoire sauvegardee : {len(stations_actuelles)} stations")
