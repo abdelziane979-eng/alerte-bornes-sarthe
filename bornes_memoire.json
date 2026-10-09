@@ -2050,7 +2050,7 @@
     "lon": "0.237465",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
@@ -2082,7 +2082,7 @@
     "lon": "0.24189",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
