@@ -15,22 +15,6 @@
       "Type 2"
     ]
   },
-  "FRALLPGO000672": {
-    "id": "FRALLPGO000672",
-    "nom": "Burger King Le Mans Saint-Saturnin",
-    "adresse": "9 Rue Des Petites Marnieres",
-    "commune": "Saint-Saturnin",
-    "cp": "72650",
-    "lat": "48.047642",
-    "lon": "0.170206",
-    "operateur": "Allego",
-    "enseigne": "Allego - Burger King Le Mans Saint-Saturnin",
-    "puissance_max": 200.0,
-    "nbre_pdc": 4,
-    "prises": [
-      "CCS"
-    ]
-  },
   "FRSITE00000248": {
     "id": "FRSITE00000248",
     "nom": "Aire de Pirmil Ouest_A11",
@@ -46,24 +30,6 @@
     "prises": [
       "CCS",
       "CHAdeMO",
-      "EF",
-      "Type 2"
-    ]
-  },
-  "FRALLPGO000429": {
-    "id": "FRALLPGO000429",
-    "nom": "Aire de Pirmil Ouest_A11",
-    "adresse": "Aire de Pirmil Ouest, A11, km 197",
-    "commune": "Pirmil",
-    "cp": "72430",
-    "lat": "47.911741",
-    "lon": "-0.0869742",
-    "operateur": "Allego",
-    "enseigne": "Allego - Aire de Pirmil Ouest_A11",
-    "puissance_max": 300.0,
-    "nbre_pdc": 13,
-    "prises": [
-      "CCS",
       "EF",
       "Type 2"
     ]
@@ -87,24 +53,6 @@
       "Type 2"
     ]
   },
-  "FRALLPGO000428": {
-    "id": "FRALLPGO000428",
-    "nom": "Aire de Pirmil Est_A11",
-    "adresse": "Aire de Pirmil Est, A11, km 197",
-    "commune": "Pirmil",
-    "cp": "72430",
-    "lat": "47.9122925",
-    "lon": "-0.0831179",
-    "operateur": "Allego",
-    "enseigne": "Allego - Aire de Pirmil Est_A11",
-    "puissance_max": 300.0,
-    "nbre_pdc": 13,
-    "prises": [
-      "CCS",
-      "EF",
-      "Type 2"
-    ]
-  },
   "FRSITE00000316": {
     "id": "FRSITE00000316",
     "nom": "Aire du Mans Nord_A11",
@@ -120,24 +68,6 @@
     "prises": [
       "CCS",
       "CHAdeMO",
-      "EF",
-      "Type 2"
-    ]
-  },
-  "FRALLPGO000757": {
-    "id": "FRALLPGO000757",
-    "nom": "Aire de Le Mans Nord_A11",
-    "adresse": "A11 Sortie 7 Le Mans ZI Nord",
-    "commune": "Saint-Saturnin",
-    "cp": "72650",
-    "lat": "48.051271",
-    "lon": "0.173327",
-    "operateur": "Allego",
-    "enseigne": "Allego - Aire de Le Mans Nord_A11",
-    "puissance_max": 300.0,
-    "nbre_pdc": 15,
-    "prises": [
-      "CCS",
       "EF",
       "Type 2"
     ]
@@ -244,90 +174,6 @@
       "Type 2"
     ]
   },
-  "FRATLPPORT6501": {
-    "id": "FRATLPPORT6501",
-    "nom": "Atlante -  Saint Saturnin - Le Portofino",
-    "adresse": "Rue Louis Chappée, 7, Saint-Saturnin",
-    "commune": "Saint-Saturnin",
-    "cp": "72650",
-    "lat": "48.052051",
-    "lon": "0.166481",
-    "operateur": "Atlante France",
-    "enseigne": "Atlante -  Saint Saturnin - Le Portofino",
-    "puissance_max": 150.0,
-    "nbre_pdc": 9,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRATLPFR00858": {
-    "id": "FRATLPFR00858",
-    "nom": "Atlante - Arçonnay - Burger King",
-    "adresse": "Rue Des Coudrays, 2, Arçonnay",
-    "commune": "Arçonnay",
-    "cp": "72610",
-    "lat": "48.40422",
-    "lon": "0.089477",
-    "operateur": "Atlante France",
-    "enseigne": "Atlante - Arçonnay - Burger King",
-    "puissance_max": 300.0,
-    "nbre_pdc": 14,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRATLPFR00542": {
-    "id": "FRATLPFR00542",
-    "nom": "Atlante - Arnage - Hôtel Restaurant Campanile Le Mans Sud Arnage",
-    "adresse": "Rue de la Gemerie, , Arnage",
-    "commune": "Arnage",
-    "cp": "72230",
-    "lat": "47.9429",
-    "lon": "0.1814",
-    "operateur": "Atlante France",
-    "enseigne": "Atlante - Arnage - Hôtel Restaurant Campanile Le Mans Sud Arnage",
-    "puissance_max": 150.0,
-    "nbre_pdc": 6,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRATLPFR00286": {
-    "id": "FRATLPFR00286",
-    "nom": "Atlante - Arçonnay - King Jouet Alençon",
-    "adresse": "Rue du Maine Normandie, , Arçonnay",
-    "commune": "Arçonnay",
-    "cp": "72610",
-    "lat": "48.40814",
-    "lon": "0.08752",
-    "operateur": "Atlante France",
-    "enseigne": "Atlante - Arçonnay - King Jouet Alençon",
-    "puissance_max": 300.0,
-    "nbre_pdc": 9,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRATLPFR00969": {
-    "id": "FRATLPFR00969",
-    "nom": "Atlante - La Flèche - Kiabi",
-    "adresse": "zone Commerciale De La Monnerie, , La Flèche",
-    "commune": "La Flèche",
-    "cp": "72200",
-    "lat": "47.70546",
-    "lon": "-0.04994",
-    "operateur": "Atlante France",
-    "enseigne": "Atlante - La Flèche - Kiabi",
-    "puissance_max": 600.0,
-    "nbre_pdc": 6,
-    "prises": [
-      "CCS"
-    ]
-  },
   "FRAU1P00960000": {
     "id": "FRAU1P00960000",
     "nom": "Etoile Routière LE BAILLEUL (72)",
@@ -339,7 +185,7 @@
     "operateur": "AUTORECHARGE SAS",
     "enseigne": "Etoile Routière LE BAILLEUL (72))",
     "puissance_max": 400.0,
-    "nbre_pdc": 16,
+    "nbre_pdc": 8,
     "prises": [
       "CCS"
     ]
@@ -370,8 +216,8 @@
     "lon": "0.174899",
     "operateur": "bp France",
     "enseigne": "bp pulse",
-    "puissance_max": 500.0,
-    "nbre_pdc": 26,
+    "puissance_max": 300.0,
+    "nbre_pdc": 13,
     "prises": [
       "CCS",
       "Type 2"
@@ -411,22 +257,6 @@
       "Type 2"
     ]
   },
-  "FRDREP720030001": {
-    "id": "FRDREP720030001",
-    "nom": "Aria Parc | Conn. 1",
-    "adresse": "1 Rue de la Berardiere, 72003 Allonnes",
-    "commune": "Allonnes",
-    "cp": "72700",
-    "lat": "47.975",
-    "lon": "0.151",
-    "operateur": "DREAM ENERGY",
-    "enseigne": "DREAM ENERGY",
-    "puissance_max": 200.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS"
-    ]
-  },
   "FRDRVPCRFMKT721201": {
     "id": "FRDRVPCRFMKT721201",
     "nom": "Carrefour Market - Saint-Calais Pressoir",
@@ -438,7 +268,7 @@
     "operateur": "DRIVECO",
     "enseigne": "DRIVECO",
     "puissance_max": 50.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -457,7 +287,7 @@
     "operateur": "DRIVECO",
     "enseigne": "DRIVECO",
     "puissance_max": 50.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -476,7 +306,7 @@
     "operateur": "DRIVECO",
     "enseigne": "DRIVECO",
     "puissance_max": 50.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -495,7 +325,7 @@
     "operateur": "DRIVECO",
     "enseigne": "DRIVECO",
     "puissance_max": 50.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -514,7 +344,7 @@
     "operateur": "DRIVECO",
     "enseigne": "DRIVECO",
     "puissance_max": 50.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -533,7 +363,7 @@
     "operateur": "DRIVECO",
     "enseigne": "DRIVECO",
     "puissance_max": 50.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -552,7 +382,7 @@
     "operateur": "IZIVIA",
     "enseigne": "Izivia Express",
     "puissance_max": 63.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -570,10 +400,9 @@
     "operateur": "IZIVIA",
     "enseigne": "Izivia Express",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
-      "CHAdeMO",
       "Type 2"
     ]
   },
@@ -593,41 +422,6 @@
       "CCS"
     ]
   },
-  "FRELCP12953951": {
-    "id": "FRELCP12953951",
-    "nom": "Electra Ruaudin - CC Family Village les Hunaudières",
-    "adresse": "1 boulevard des Hunaudières, 72230 Ruaudin",
-    "commune": "Mulsanne",
-    "cp": "72230",
-    "lat": "47.943807",
-    "lon": "0.239637",
-    "operateur": "Electra",
-    "enseigne": "Electra Ruaudin - CC Family Village les Hunaudières",
-    "puissance_max": 300.0,
-    "nbre_pdc": 6,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "Type 2"
-    ]
-  },
-  "FRELCP12954305": {
-    "id": "FRELCP12954305",
-    "nom": "Electra Saint-Saturnin - Electra",
-    "adresse": "ZAC des portes de l'Océane, N138, 72650 Saint-Saturnin",
-    "commune": "Saint-Saturnin",
-    "cp": "72650",
-    "lat": "48.049505",
-    "lon": "0.169569",
-    "operateur": "Electra",
-    "enseigne": "Electra Saint-Saturnin - Electra",
-    "puissance_max": 400.0,
-    "nbre_pdc": 10,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
   "FRETIP72058A": {
     "id": "FRETIP72058A",
     "nom": "e-Totem - Domaine de la blanchardière ",
@@ -639,7 +433,7 @@
     "operateur": "E-TOTEM",
     "enseigne": "Réseau e-Totem Infrastructures",
     "puissance_max": 22.0,
-    "nbre_pdc": 12,
+    "nbre_pdc": 6,
     "prises": [
       "Type 2"
     ]
@@ -655,44 +449,10 @@
     "operateur": "E-TOTEM",
     "enseigne": "Réseau e-Totem Infrastructures",
     "puissance_max": 150.0,
-    "nbre_pdc": 12,
+    "nbre_pdc": 6,
     "prises": [
       "CCS",
       "Type 2"
-    ]
-  },
-  "FREVZP92B39C4E36764304999378F5A57AF": {
-    "id": "FREVZP92B39C4E36764304999378F5A57AF",
-    "nom": "EVzen - Coulaines, Alpha Services Coulaines",
-    "adresse": "Rue Jean Cocteau Et Bd Saint Nicolas 72190 Coulaines",
-    "commune": "Coulaines",
-    "cp": "72190",
-    "lat": "48.028683",
-    "lon": "0.202702",
-    "operateur": "EVzen",
-    "enseigne": "EVzen",
-    "puissance_max": 120.0,
-    "nbre_pdc": 5,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRFASP11948241": {
-    "id": "FRFASP11948241",
-    "nom": "Fastned Yvré L'Evèque",
-    "adresse": "Avenue d'Auvours 1, 72530 Yvré-l'Évêque",
-    "commune": "Yvré-l'Évêque",
-    "cp": "72530",
-    "lat": "48.011427",
-    "lon": "0.300547",
-    "operateur": "Fastned France",
-    "enseigne": "Fastned Yvré L'Evèque",
-    "puissance_max": 400.0,
-    "nbre_pdc": 4,
-    "prises": [
-      "CCS",
-      "CHAdeMO"
     ]
   },
   "Non concerné": {
@@ -711,25 +471,6 @@
       "Type 2"
     ]
   },
-  "FRHPCPNF059902TOTEM": {
-    "id": "FRHPCPNF059902TOTEM",
-    "nom": "SARTHE SARGE LE MANS SUD",
-    "adresse": "L'OCEANE, 72190 SARGE LES LE MANS",
-    "commune": "Sargé-lès-le-Mans",
-    "cp": "72190",
-    "lat": "48.055456",
-    "lon": "0.252268",
-    "operateur": "TotalEnergies Marketing France",
-    "enseigne": "TotalEnergies Charge Rapide",
-    "puissance_max": 175.0,
-    "nbre_pdc": 8,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "EF",
-      "Type 2"
-    ]
-  },
   "FRHPCPNF059902": {
     "id": "FRHPCPNF059902",
     "nom": "SARTHE SARGE LE MANS SUD",
@@ -742,25 +483,6 @@
     "enseigne": "TotalEnergies Charge Rapide",
     "puissance_max": 175.0,
     "nbre_pdc": 8,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "EF",
-      "Type 2"
-    ]
-  },
-  "FRHPCPNF080138TOTEM": {
-    "id": "FRHPCPNF080138TOTEM",
-    "nom": "SARTHE SARGE LE MANS NORD",
-    "adresse": "L'OCEANE, 72190 SARGE LES LE MANS",
-    "commune": "Sargé-lès-le-Mans",
-    "cp": "72190",
-    "lat": "48.056344",
-    "lon": "0.254399",
-    "operateur": "TotalEnergies Marketing France",
-    "enseigne": "TotalEnergies Charge Rapide",
-    "puissance_max": 300.0,
-    "nbre_pdc": 16,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -790,67 +512,18 @@
   "FRHPCPNF080150": {
     "id": "FRHPCPNF080150",
     "nom": "RELAIS MARESCHE",
-    "adresse": "A28 GARE DE PEAGE MARESCHE, 72170 MARESCHE",
+    "adresse": "GARE DE PEAGE  MARESCHE - A28",
     "commune": "Maresché",
     "cp": "72170",
-    "lat": "48.197319",
-    "lon": "0.169097",
-    "operateur": "TotalEnergies Marketing France",
+    "lat": "48.1975",
+    "lon": "0.1689",
+    "operateur": "TotalEnergies Charging Services",
     "enseigne": "TotalEnergies Charge Rapide",
     "puissance_max": 150.0,
-    "nbre_pdc": 2,
+    "nbre_pdc": 1,
     "prises": [
-      "CCS",
       "CHAdeMO",
       "Type 2"
-    ]
-  },
-  "FRIDXP91355366": {
-    "id": "FRIDXP91355366",
-    "nom": "Parking Zoo de la Flèche",
-    "adresse": "Le Tertre Rouge",
-    "commune": "La Flèche",
-    "cp": "72200",
-    "lat": "47.677576",
-    "lon": "-0.04594",
-    "operateur": "Idex",
-    "enseigne": "Looping",
-    "puissance_max": 22.08,
-    "nbre_pdc": 26,
-    "prises": [
-      "Type 2"
-    ]
-  },
-  "FRIENP002401": {
-    "id": "FRIENP002401",
-    "nom": "Sablé-sur-Sarthe",
-    "adresse": "La petite Croix, 72300 Sablé-sur-Sarthe",
-    "commune": "Sablé-sur-Sarthe",
-    "cp": "72300",
-    "lat": "47.834549",
-    "lon": "-0.357699",
-    "operateur": "NW IECharge",
-    "enseigne": "Sablé-sur-Sarthe",
-    "puissance_max": 320.0,
-    "nbre_pdc": 2,
-    "prises": [
-      "CCS"
-    ]
-  },
-  "FRIENP002402": {
-    "id": "FRIENP002402",
-    "nom": "Sablé-sur-Sarthe",
-    "adresse": "La petite Croix, 72300 Sablé-sur-Sarthe",
-    "commune": "Sablé-sur-Sarthe",
-    "cp": "72300",
-    "lat": "47.834549",
-    "lon": "-0.357699",
-    "operateur": "NW IECharge",
-    "enseigne": "Sablé-sur-Sarthe",
-    "puissance_max": 320.0,
-    "nbre_pdc": 2,
-    "prises": [
-      "CCS"
     ]
   },
   "FRIGFPFRAI30": {
@@ -864,7 +537,7 @@
     "operateur": "IZIVIA",
     "enseigne": "GRAND FRAIS",
     "puissance_max": 150.0,
-    "nbre_pdc": 10,
+    "nbre_pdc": 6,
     "prises": [
       "CCS",
       "Type 2"
@@ -942,94 +615,6 @@
       "Type 2"
     ]
   },
-  "FRIOYP13530964": {
-    "id": "FRIOYP13530964",
-    "nom": "IONITY GmbH IONITY Sarthe Nord",
-    "adresse": "Aire de Parce Ouest, 72300 Parcé-sur-Sarthe",
-    "commune": "Parcé-sur-Sarthe",
-    "cp": "72300",
-    "lat": "47.807101",
-    "lon": "-0.166865",
-    "operateur": "Ionity",
-    "enseigne": "IONITY GmbH IONITY Sarthe Nord",
-    "puissance_max": 350.0,
-    "nbre_pdc": 7,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "Type 2"
-    ]
-  },
-  "FRIOYP13530938": {
-    "id": "FRIOYP13530938",
-    "nom": "IONITY GmbH IONITY Sarthe Sud",
-    "adresse": "A11 Aire De Parce Est, 72300 Parcé-sur-Sarthe",
-    "commune": "Parcé-sur-Sarthe",
-    "cp": "72300",
-    "lat": "47.803507",
-    "lon": "-0.16809",
-    "operateur": "Ionity",
-    "enseigne": "IONITY GmbH IONITY Sarthe Sud",
-    "puissance_max": 350.0,
-    "nbre_pdc": 7,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "Type 2"
-    ]
-  },
-  "FRIOYP13531100": {
-    "id": "FRIOYP13531100",
-    "nom": "IONITY GmbH IONITY Villaines la Gonais",
-    "adresse": "Aire de service de Villaines la Gonais, A11, 72400 Villaines-la-Gonais",
-    "commune": "La Bosse",
-    "cp": "72400",
-    "lat": "48.125475",
-    "lon": "0.622302",
-    "operateur": "Ionity",
-    "enseigne": "IONITY GmbH IONITY Villaines la Gonais",
-    "puissance_max": 350.0,
-    "nbre_pdc": 12,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "Type 2"
-    ]
-  },
-  "FRIOYP13530978": {
-    "id": "FRIOYP13530978",
-    "nom": "IONITY GmbH IONITY La Ferté-Bernard",
-    "adresse": "Aire de service de la Ferté Bernard, A11, 72400 Villaines-la-Gonais",
-    "commune": "Villaines-la-Gonais",
-    "cp": "72400",
-    "lat": "48.126677",
-    "lon": "0.623299",
-    "operateur": "Ionity",
-    "enseigne": "IONITY GmbH IONITY La Ferté-Bernard",
-    "puissance_max": 350.0,
-    "nbre_pdc": 8,
-    "prises": [
-      "CCS",
-      "CHAdeMO",
-      "Type 2"
-    ]
-  },
-  "FRIOYP13531530": {
-    "id": "FRIOYP13531530",
-    "nom": "IONITY GmbH IONITY Saint-Saturnin",
-    "adresse": "Zone commerciale des Portes de l'Océane, 72650 Saint-Saturnin",
-    "commune": "Saint-Saturnin",
-    "cp": "72650",
-    "lat": "48.050801",
-    "lon": "0.171248",
-    "operateur": "Ionity",
-    "enseigne": "IONITY GmbH IONITY Saint-Saturnin",
-    "puissance_max": 400.0,
-    "nbre_pdc": 6,
-    "prises": [
-      "CCS"
-    ]
-  },
   "FRIZFPFAST121": {
     "id": "FRIZFPFAST121",
     "nom": "IZIVIA FAST - McDonald's -  Le Mans Nord",
@@ -1041,7 +626,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1058,7 +643,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1075,7 +660,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1092,7 +677,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 200.0,
-    "nbre_pdc": 15,
+    "nbre_pdc": 9,
     "prises": [
       "CCS",
       "Type 2"
@@ -1109,7 +694,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1126,7 +711,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 6,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1143,7 +728,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1160,7 +745,7 @@
     "operateur": "IZIVIA",
     "enseigne": "IZIVIA FAST",
     "puissance_max": 150.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1195,7 +780,7 @@
     "operateur": "LIDL France",
     "enseigne": "LIDL",
     "puissance_max": 120.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "EF",
@@ -1231,7 +816,7 @@
     "operateur": "LIDL France",
     "enseigne": "LIDL",
     "puissance_max": 120.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "CCS",
       "EF",
@@ -1249,7 +834,7 @@
     "operateur": "LIDL France",
     "enseigne": "LIDL",
     "puissance_max": 22.0,
-    "nbre_pdc": 8,
+    "nbre_pdc": 4,
     "prises": [
       "EF",
       "Type 2"
@@ -1265,8 +850,8 @@
     "lon": "-0.164533",
     "operateur": "LIDL France",
     "enseigne": "LIDL",
-    "puissance_max": 180.0,
-    "nbre_pdc": 12,
+    "puissance_max": 120.0,
+    "nbre_pdc": 6,
     "prises": [
       "CCS",
       "EF",
@@ -1302,7 +887,7 @@
     "operateur": "LIDL France",
     "enseigne": "LIDL",
     "puissance_max": 120.0,
-    "nbre_pdc": 18,
+    "nbre_pdc": 8,
     "prises": [
       "CCS",
       "EF",
@@ -1320,7 +905,7 @@
     "operateur": "LIDL France",
     "enseigne": "LIDL",
     "puissance_max": 120.0,
-    "nbre_pdc": 16,
+    "nbre_pdc": 8,
     "prises": [
       "CCS",
       "EF",
@@ -1436,7 +1021,7 @@
     "operateur": "Power Dot France",
     "enseigne": "Power Dot France",
     "puissance_max": 100.0,
-    "nbre_pdc": 12,
+    "nbre_pdc": 6,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -1454,7 +1039,7 @@
     "operateur": "Power Dot France",
     "enseigne": "Power Dot France",
     "puissance_max": 100.0,
-    "nbre_pdc": 24,
+    "nbre_pdc": 12,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -1472,7 +1057,7 @@
     "operateur": "Power Dot France",
     "enseigne": "Power Dot France",
     "puissance_max": 200.0,
-    "nbre_pdc": 12,
+    "nbre_pdc": 6,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -1489,29 +1074,12 @@
     "lon": "-0.054514444844058",
     "operateur": "Power Dot France",
     "enseigne": "Power Dot France",
-    "puissance_max": 200.0,
-    "nbre_pdc": 34,
+    "puissance_max": 187.5,
+    "nbre_pdc": 17,
     "prises": [
       "CCS",
       "CHAdeMO",
       "Type 2"
-    ]
-  },
-  "FRPD1PSUPSAB": {
-    "id": "FRPD1PSUPSAB",
-    "nom": "Super U - Sablé-sur-Sarthe",
-    "adresse": "2 Rue de Plaisance, 72300 Sablé-sur-Sarthe, France",
-    "commune": "Sablé-sur-Sarthe",
-    "cp": "72300",
-    "lat": "47.850226",
-    "lon": "-0.350858",
-    "operateur": "Power Dot France",
-    "enseigne": "Power Dot France",
-    "puissance_max": 120.0,
-    "nbre_pdc": 4,
-    "prises": [
-      "CCS",
-      "CHAdeMO"
     ]
   },
   "FRPD1PSYUMEC": {
@@ -1525,7 +1093,7 @@
     "operateur": "Power Dot France",
     "enseigne": "Power Dot France",
     "puissance_max": 60.0,
-    "nbre_pdc": 12,
+    "nbre_pdc": 6,
     "prises": [
       "CCS",
       "CHAdeMO",
@@ -1590,22 +1158,6 @@
       "CCS",
       "CHAdeMO",
       "EF",
-      "Type 2"
-    ]
-  },
-  "FRQWTP720030001": {
-    "id": "FRQWTP720030001",
-    "nom": "Aria Parc | Conn. 1",
-    "adresse": "1 Rue de la Berardiere, 72003 Allonnes",
-    "commune": "Allonnes",
-    "cp": "72700",
-    "lat": "47.975",
-    "lon": "0.151",
-    "operateur": "QoWatt",
-    "enseigne": "QoWatt",
-    "puissance_max": 200.0,
-    "nbre_pdc": 3,
-    "prises": [
       "Type 2"
     ]
   },
@@ -1696,7 +1248,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1713,7 +1265,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 4,
+    "nbre_pdc": 2,
     "prises": [
       "CCS",
       "Type 2"
@@ -1730,7 +1282,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 4,
+    "nbre_pdc": 2,
     "prises": [
       "CCS",
       "Type 2"
@@ -1747,7 +1299,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 4,
+    "nbre_pdc": 2,
     "prises": [
       "CCS",
       "Type 2"
@@ -1764,7 +1316,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 4,
+    "nbre_pdc": 2,
     "prises": [
       "CCS",
       "Type 2"
@@ -1781,7 +1333,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 5,
+    "nbre_pdc": 3,
     "prises": [
       "CCS",
       "Type 2"
@@ -1798,7 +1350,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 4,
+    "nbre_pdc": 2,
     "prises": [
       "CCS",
       "Type 2"
@@ -1815,7 +1367,7 @@
     "operateur": "STATIONS-E",
     "enseigne": "Stations-e",
     "puissance_max": 24.0,
-    "nbre_pdc": 4,
+    "nbre_pdc": 2,
     "prises": [
       "CCS",
       "Type 2"
@@ -2050,7 +1602,7 @@
     "lon": "0.237465",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
@@ -2066,7 +1618,7 @@
     "lon": "0.172916",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
@@ -2082,7 +1634,7 @@
     "lon": "0.24189",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
@@ -2091,32 +1643,31 @@
   "FRTSLP1745": {
     "id": "FRTSLP1745",
     "nom": "Le Mans, France",
-    "adresse": "ZAC du Moulin aux Moines, Route d'Alencon",
+    "adresse": "ZAC du Moulin aux Moines, Route d'Alencon, 72650 La Chapelle St Aubin",
     "commune": "La Chapelle-Saint-Aubin",
     "cp": "72650",
-    "lat": "48.041259",
-    "lon": "0.175722",
-    "operateur": "Tesla",
-    "enseigne": "Tesla",
+    "lat": "48.041833",
+    "lon": "0.175342",
+    "operateur": "TESLA France SARL",
+    "enseigne": "TESLA SUPERCHARGER",
     "puissance_max": 250.0,
-    "nbre_pdc": 32,
+    "nbre_pdc": 16,
     "prises": [
-      "CCS",
-      "Type 2"
+      "CCS"
     ]
   },
   "FRTSLP17341": {
     "id": "FRTSLP17341",
     "nom": "Saint-Saturnin, France",
-    "adresse": "3, Rue Louis Chappée",
+    "adresse": "3 Rue Louis Chappée, 72650 Saint-Saturnin ",
     "commune": "Saint-Saturnin",
     "cp": "72650",
-    "lat": "48.053197",
-    "lon": "0.166468",
-    "operateur": "Tesla",
-    "enseigne": "Tesla",
+    "lat": "48.05298386",
+    "lon": "0.16638841",
+    "operateur": "TESLA France SARL",
+    "enseigne": "TESLA SUPERCHARGER",
     "puissance_max": 250.0,
-    "nbre_pdc": 86,
+    "nbre_pdc": 29,
     "prises": [
       "CCS"
     ]
@@ -2132,7 +1683,7 @@
     "operateur": "Greenflux",
     "enseigne": "ENGIE Vianeo",
     "puissance_max": 300.0,
-    "nbre_pdc": 24,
+    "nbre_pdc": 12,
     "prises": [
       "CCS",
       "CHAdeMO",
