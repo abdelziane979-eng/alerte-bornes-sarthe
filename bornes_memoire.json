@@ -1112,7 +1112,9 @@
     "enseigne": "QOVOLTIS",
     "puissance_max": 22.0,
     "nbre_pdc": 5,
-    "prises": []
+    "prises": [
+      "Type 2"
+    ]
   },
   "FRQVI7200006": {
     "id": "FRQVI7200006",
@@ -1126,7 +1128,9 @@
     "enseigne": "QOVOLTIS",
     "puissance_max": 22.0,
     "nbre_pdc": 3,
-    "prises": []
+    "prises": [
+      "Type 2"
+    ]
   },
   "FRQVI7205347": {
     "id": "FRQVI7205347",
@@ -1140,7 +1144,9 @@
     "enseigne": "QOVOLTIS",
     "puissance_max": 22.0,
     "nbre_pdc": 2,
-    "prises": []
+    "prises": [
+      "Type 2"
+    ]
   },
   "FRQWTP733981": {
     "id": "FRQWTP733981",
@@ -1602,7 +1608,7 @@
     "lon": "0.237465",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
