@@ -1132,20 +1132,6 @@
       "Type 2"
     ]
   },
-  "FRQVI7205347": {
-    "id": "FRQVI7205347",
-    "nom": "2 ld, Meslay",
-    "adresse": "2 ld, Meslay 72610 FYE",
-    "commune": "Fyé",
-    "cp": "72610",
-    "lat": "48.3312545",
-    "lon": "0.0448862",
-    "operateur": "QOVOLTIS",
-    "enseigne": "QOVOLTIS",
-    "puissance_max": 22.0,
-    "nbre_pdc": 2,
-    "prises": []
-  },
   "FRQWTP733981": {
     "id": "FRQWTP733981",
     "nom": "1 Rue de la Berardiere, 72700 Allonnes",
@@ -1606,7 +1592,7 @@
     "lon": "0.237465",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 22.0,
+    "puissance_max": 7.4,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
