@@ -1144,9 +1144,7 @@
     "enseigne": "QOVOLTIS",
     "puissance_max": 22.0,
     "nbre_pdc": 2,
-    "prises": [
-      "Type 2"
-    ]
+    "prises": []
   },
   "FRQWTP733981": {
     "id": "FRQWTP733981",
