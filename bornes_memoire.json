@@ -1566,6 +1566,210 @@
       "Type 2"
     ]
   },
+  "FRSYSE72250": {
+    "id": "FRSYSE72250",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Challes",
+    "cp": "72250",
+    "lat": "47.9466936",
+    "lon": "0.4341417",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 7.4,
+    "nbre_pdc": 2,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72560": {
+    "id": "FRSYSE72560",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Changé",
+    "cp": "72560",
+    "lat": "47.9890078",
+    "lon": "0.2815696",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 22.0,
+    "nbre_pdc": 2,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72700": {
+    "id": "FRSYSE72700",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Allonnes",
+    "cp": "72700",
+    "lat": "47.9504425",
+    "lon": "0.163116",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 11.0,
+    "nbre_pdc": 9,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72100": {
+    "id": "FRSYSE72100",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Le Mans",
+    "cp": "72100",
+    "lat": "47.982543",
+    "lon": "0.229774",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 22.0,
+    "nbre_pdc": 26,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72000": {
+    "id": "FRSYSE72000",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Le Mans",
+    "cp": "72000",
+    "lat": "48.0193118",
+    "lon": "0.2336945",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 22.0,
+    "nbre_pdc": 15,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72450": {
+    "id": "FRSYSE72450",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Lombron",
+    "cp": "72450",
+    "lat": "48.0793622",
+    "lon": "0.4175385",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 7.4,
+    "nbre_pdc": 1,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72380": {
+    "id": "FRSYSE72380",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Montbizot",
+    "cp": "72380",
+    "lat": "48.1482",
+    "lon": "0.1832987",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 22.0,
+    "nbre_pdc": 2,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72190": {
+    "id": "FRSYSE72190",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Sargé-lès-le-Mans",
+    "cp": "72190",
+    "lat": "48.0341167",
+    "lon": "0.2427462",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 22.0,
+    "nbre_pdc": 5,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72370": {
+    "id": "FRSYSE72370",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Soulitré",
+    "cp": "72370",
+    "lat": "48.012295",
+    "lon": "0.455746",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 7.4,
+    "nbre_pdc": 1,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72120": {
+    "id": "FRSYSE72120",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Saint-Calais",
+    "cp": "72120",
+    "lat": "47.9256181",
+    "lon": "0.7592303",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 7.4,
+    "nbre_pdc": 2,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72530": {
+    "id": "FRSYSE72530",
+    "nom": "Voirie publique",
+    "adresse": "-",
+    "commune": "Yvré-l'Évêque",
+    "cp": "72530",
+    "lat": "48.0145256",
+    "lon": "0.2776676",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 22.0,
+    "nbre_pdc": 1,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
+  "FRSYSE72230": {
+    "id": "FRSYSE72230",
+    "nom": "Voirie publique",
+    "adresse": "72230 Guécélard",
+    "commune": "Guécélard",
+    "cp": "72230",
+    "lat": "47.8724862",
+    "lon": "0.1238233",
+    "operateur": "SEEYOUSUN",
+    "enseigne": "SEEYOUSUN",
+    "puissance_max": 7.4,
+    "nbre_pdc": 1,
+    "prises": [
+      "EF",
+      "Type 2"
+    ]
+  },
   "FRSYSELMSSGDB": {
     "id": "FRSYSELMSSGDB",
     "nom": "Saint-Georges-du-bois",
@@ -1608,7 +1812,7 @@
     "lon": "0.172916",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
