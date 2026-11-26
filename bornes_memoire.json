@@ -526,23 +526,6 @@
       "Type 2"
     ]
   },
-  "FRIGFPFRAI30": {
-    "id": "FRIGFPFRAI30",
-    "nom": "IZIVIA MAX - GRAND FRAIS - SARGÉ-LÈS-LE-MANS",
-    "adresse": "Rue des Frènes 72190 Sargé-lès-le-Mans",
-    "commune": "Sargé-lès-le-Mans",
-    "cp": "72190",
-    "lat": "48.0245525",
-    "lon": "0.2395174",
-    "operateur": "IZIVIA",
-    "enseigne": "GRAND FRAIS",
-    "puissance_max": 150.0,
-    "nbre_pdc": 6,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
   "FRIONE404100": {
     "id": "FRIONE404100",
     "nom": "IONITY Villaines la Gonais",
@@ -612,142 +595,6 @@
     "prises": [
       "CCS",
       "CHAdeMO",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST121": {
-    "id": "FRIZFPFAST121",
-    "nom": "IZIVIA FAST - McDonald's -  Le Mans Nord",
-    "adresse": "1 Lotissement Commercial Détroit 72650 La Chapelle-Saint-Aubin",
-    "commune": "La Chapelle-Saint-Aubin",
-    "cp": "72650",
-    "lat": "48.03668497283907",
-    "lon": "0.1753439588607808",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST243": {
-    "id": "FRIZFPFAST243",
-    "nom": "IZIVIA FAST - McDonald's - Sable sur Sarthe",
-    "adresse": "Routes de Solesmes, Parc de la Tuilerie 72300 Sablé-sur-Sarthe",
-    "commune": "Solesmes",
-    "cp": "72300",
-    "lat": "47.8382840504821",
-    "lon": "-0.29916719206543263",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST288": {
-    "id": "FRIZFPFAST288",
-    "nom": "IZIVIA FAST - McDonald's - Allonnes",
-    "adresse": "Rue de la Raterie 72700 Allonnes",
-    "commune": "Allonnes",
-    "cp": "72700",
-    "lat": "47.97455381211864",
-    "lon": "0.15872431018754352",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST434": {
-    "id": "FRIZFPFAST434",
-    "nom": "IZIVIA FAST - McDonald's -  Le Mans CGR",
-    "adresse": "1 Rue Pique Prunes 72650 Saint-Saturnin",
-    "commune": "Saint-Saturnin",
-    "cp": "72650",
-    "lat": "48.05076530113992",
-    "lon": "0.1703193573286021",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 200.0,
-    "nbre_pdc": 9,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST592": {
-    "id": "FRIZFPFAST592",
-    "nom": "IZIVIA FAST - McDonald's - LA FERTE BERNARD",
-    "adresse": "3 Avenue du Général de Gaulle 72400 LA FERTE BERNARD",
-    "commune": "La Ferté-Bernard",
-    "cp": "72400",
-    "lat": "48.180968573281",
-    "lon": "0.652593035748101",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST618": {
-    "id": "FRIZFPFAST618",
-    "nom": "IZIVIA FAST - McDonald's - ARCONNAY",
-    "adresse": "ZA Du Petit Coudray 72610 ARCONNAY",
-    "commune": "Arçonnay",
-    "cp": "72610",
-    "lat": "48.405715931442",
-    "lon": "0.0884145953800261",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST653": {
-    "id": "FRIZFPFAST653",
-    "nom": "IZIVIA FAST - McDonald's - La Flèche",
-    "adresse": "La Monnerie 72200 La Flèche",
-    "commune": "La Flèche",
-    "cp": "72200",
-    "lat": "47.7036396255164",
-    "lon": "-0.05349225032567209",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
-      "Type 2"
-    ]
-  },
-  "FRIZFPFAST742": {
-    "id": "FRIZFPFAST742",
-    "nom": "IZIVIA FAST - McDonald's - Mamers",
-    "adresse": "11 Route de Belleme 72600 Mamers",
-    "commune": "Mamers",
-    "cp": "72600",
-    "lat": "48.35022600767137",
-    "lon": "0.38542388630864177",
-    "operateur": "IZIVIA",
-    "enseigne": "IZIVIA FAST",
-    "puissance_max": 150.0,
-    "nbre_pdc": 3,
-    "prises": [
-      "CCS",
       "Type 2"
     ]
   },
@@ -1812,7 +1659,7 @@
     "lon": "0.172916",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun ",
-    "puissance_max": 22.0,
+    "puissance_max": 7.4,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
@@ -1828,7 +1675,7 @@
     "lon": "0.24189",
     "operateur": "See You Sun",
     "enseigne": "Le mans sun",
-    "puissance_max": 7.4,
+    "puissance_max": 22.0,
     "nbre_pdc": 1,
     "prises": [
       "Type 2"
